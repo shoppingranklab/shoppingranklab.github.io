@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preload" as="image" href="assets/hero.webp" fetchpriority="high">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-<link rel="stylesheet" href="styles.css?v=12">
+<link rel="stylesheet" href="styles.css?v=13">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -58,18 +58,19 @@
 
     <nav class="nav" id="nav" aria-label="주요 메뉴">
       <a href="#why">연구소 소개</a>
-      <a href="#sim">진단 프로세스</a>
+      <a href="#sim">진단 시뮬레이터</a>
       <a href="#solutions">핵심 솔루션</a>
+      <a href="#compare">정비 전후</a>
       <a href="#channels">운영 채널</a>
       <a href="#contact">상담 안내</a>
-      <a class="nav-cta" href="https://open.kakao.com/o/smnMRaYi" target="_blank" rel="noopener">1:1 오픈카톡 상담</a>
+      <button class="nav-cta" type="button" data-open-consult aria-haspopup="dialog" aria-controls="consultModal">1:1 상담 안내</button>
     </nav>
 
     <div class="header-actions">
-      <a class="btn btn-primary btn-sm header-cta" href="https://open.kakao.com/o/smnMRaYi" target="_blank" rel="noopener">
+      <button class="btn btn-primary btn-sm header-cta" type="button" data-open-consult aria-haspopup="dialog" aria-controls="consultModal">
         <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4c-4.7 0-8.5 3-8.5 6.8 0 2.4 1.5 4.5 3.9 5.8l-.8 3.1c-.1.4.3.7.7.5l3.6-2.3c.4.1.7.1 1.1.1 4.7 0 8.5-3 8.5-6.8S16.7 4 12 4Z"/></svg>
         1:1 상담
-      </a>
+      </button>
       <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="메뉴 열기">
         <span></span><span></span><span></span>
       </button>
@@ -81,7 +82,8 @@
 <main>
 
   <!-- ============ HERO ============ -->
-  <section class="hero" aria-labelledby="heroTitle">
+  <section class="hero" aria-labelledby="heroTitle" id="hero">
+    <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
     <div class="hero-glow g1" aria-hidden="true"></div>
     <div class="hero-glow g2" aria-hidden="true"></div>
     <div class="hero-grid-lines" aria-hidden="true"></div>
@@ -133,7 +135,7 @@
           <div class="art-shade" aria-hidden="true"></div>
         </div>
 
-        <div class="dash-card" role="img" aria-label="순위 진단 리포트 예시 화면: 적합도·인기도·신뢰도 세 축을 점검하고 상승 그래프를 보여주는 카드">
+        <div class="dash-card" id="heroDash" role="group" aria-label="순위 진단 리포트 예시 화면: 적합도·인기도·신뢰도 세 축을 점검하고 상승 그래프를 보여주는 카드">
           <div class="dash-head">
             <span class="dash-title">
               <span class="dash-live" aria-hidden="true"></span>
@@ -141,23 +143,23 @@
             </span>
             <span class="dash-tag">예시 화면</span>
           </div>
-          <p class="dash-sub">스마트스토어 · 메인 키워드 진단</p>
+          <p class="dash-sub" id="heroDashSub">스마트스토어 · 메인 키워드 진단</p>
 
           <div class="axis-list">
             <div class="axis">
               <span class="axis-name">적합도</span>
-              <span class="axis-track"><i style="--w:82%"></i></span>
-              <b>82</b>
+              <span class="axis-track"><i data-hero-bar="fit" style="--w:82%"></i></span>
+              <b data-hero-val="fit">82</b>
             </div>
             <div class="axis">
               <span class="axis-name">인기도</span>
-              <span class="axis-track"><i style="--w:64%"></i></span>
-              <b>64</b>
+              <span class="axis-track"><i data-hero-bar="pop" style="--w:64%"></i></span>
+              <b data-hero-val="pop">64</b>
             </div>
             <div class="axis">
               <span class="axis-name">신뢰도</span>
-              <span class="axis-track"><i style="--w:47%"></i></span>
-              <b>47</b>
+              <span class="axis-track"><i data-hero-bar="trust" style="--w:47%"></i></span>
+              <b data-hero-val="trust">47</b>
             </div>
           </div>
 
@@ -172,9 +174,9 @@
                 <stop offset="100%" stop-color="#38d6ff"/>
               </linearGradient>
             </defs>
-            <path class="spark-area" d="M4 66 L4 58 L48 52 L92 55 L136 43 L180 38 L224 26 L268 12 L268 66 Z" fill="url(#sparkFill)"/>
-            <path class="spark-line" d="M4 58 L48 52 L92 55 L136 43 L180 38 L224 26 L268 12" stroke="url(#sparkLine)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-            <circle class="spark-dot" cx="268" cy="12" r="4.5" fill="#38d6ff"/>
+            <path class="spark-area" id="heroSparkArea" d="M4 66 L4 58 L48 52 L92 55 L136 43 L180 38 L224 26 L268 12 L268 66 Z" fill="url(#sparkFill)"/>
+            <path class="spark-line" id="heroSparkLine" d="M4 58 L48 52 L92 55 L136 43 L180 38 L224 26 L268 12" stroke="url(#sparkLine)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle class="spark-dot" id="heroSparkDot" cx="268" cy="12" r="4.5" fill="#38d6ff"/>
             <circle class="spark-halo" cx="268" cy="12" r="9" fill="#38d6ff" opacity=".22"/>
           </svg>
 
@@ -201,21 +203,21 @@
   </section>
 
   <!-- ============ MARQUEE ============ -->
-  <div class="marquee" aria-hidden="true">
+  <div class="marquee" role="group" aria-label="진단 예시 키워드 — 누르면 진단 시뮬레이터에서 바로 실행됩니다">
     <div class="marquee-track">
       <div class="marquee-group">
-        <span>스마트스토어 순위</span><i></i>
-        <span>네이버 쇼핑 SEO</span><i></i>
-        <span>적합도 · 인기도 · 신뢰도</span><i></i>
-        <span>쿠팡 아이템위너</span><i></i>
-        <span>검색어 20개 전략</span><i></i>
-        <span>무료노출 · 자동가격조정</span><i></i>
-        <span>구매전환율</span><i></i>
-        <span>리뷰 · 체류시간</span><i></i>
-        <span>세부 키워드</span><i></i>
-        <span>유입 구조 설계</span><i></i>
+        <button class="kw-pill" type="button" data-kw="스마트스토어 순위">스마트스토어 순위</button><i></i>
+        <button class="kw-pill" type="button" data-kw="네이버 쇼핑 SEO">네이버 쇼핑 SEO</button><i></i>
+        <button class="kw-pill" type="button" data-kw="적합도 · 인기도 · 신뢰도">적합도 · 인기도 · 신뢰도</button><i></i>
+        <button class="kw-pill" type="button" data-kw="쿠팡 아이템위너">쿠팡 아이템위너</button><i></i>
+        <button class="kw-pill" type="button" data-kw="검색어 20개 전략">검색어 20개 전략</button><i></i>
+        <button class="kw-pill" type="button" data-kw="무료노출 · 자동가격조정">무료노출 · 자동가격조정</button><i></i>
+        <button class="kw-pill" type="button" data-kw="구매전환율">구매전환율</button><i></i>
+        <button class="kw-pill" type="button" data-kw="리뷰 · 체류시간">리뷰 · 체류시간</button><i></i>
+        <button class="kw-pill" type="button" data-kw="세부 키워드">세부 키워드</button><i></i>
+        <button class="kw-pill" type="button" data-kw="유입 구조 설계">유입 구조 설계</button><i></i>
       </div>
-      <div class="marquee-group">
+      <div class="marquee-group" aria-hidden="true">
         <span>스마트스토어 순위</span><i></i>
         <span>네이버 쇼핑 SEO</span><i></i>
         <span>적합도 · 인기도 · 신뢰도</span><i></i>
@@ -228,6 +230,7 @@
         <span>유입 구조 설계</span><i></i>
       </div>
     </div>
+    <span class="marquee-hint" aria-hidden="true">키워드를 누르면 진단이 실행됩니다</span>
   </div>
 
   <!-- ============ WHY ============ -->
@@ -297,8 +300,130 @@
   <section class="section sim-section" id="sim">
     <div class="wrap">
       <div class="sec-head reveal">
+        <p class="eyebrow">DIAGNOSIS LAB</p>
+        <h2>내 카테고리로,<br><span class="mark">진단 화면을 직접 움직여</span> 보세요.</h2>
+        <p class="sec-lead">키워드를 넣거나 예시 카테고리를 고르고 <b>진단 시뮬레이션 실행</b>을 누르면 3축 게이지·스파크라인·레이더 차트와 맞춤 점검 포인트가 다시 계산됩니다. 수치는 화면 구성을 위한 <b>예시 시뮬레이션</b>입니다.</p>
+      </div>
+
+      <div class="lab reveal" id="lab">
+        <div class="lab-form">
+          <span class="lab-badge"><i aria-hidden="true"></i>INTERACTIVE DEMO</span>
+          <h3>어디가 막혔는지<br>먼저 확인해 보세요</h3>
+          <p class="lab-desc">상담에서 실제로 보는 항목을 그대로 화면으로 옮겼습니다. 카테고리를 바꾸거나 키워드를 넣어 보면 점검 포인트도 함께 바뀝니다.</p>
+
+          <form class="lab-input-row" id="simForm" autocomplete="off" novalidate>
+            <label class="sr-only" for="simKeyword">진단할 키워드</label>
+            <input id="simKeyword" name="kw" type="text" placeholder="예: 원피스 · 캠핑의자 · 수분크림" maxlength="24" spellcheck="false">
+            <button class="btn btn-primary lab-run" type="submit" id="simRun">
+              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 16.5 9.5 10l3.6 3.4L20 5.5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 5.5h5v5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              진단 시뮬레이션 실행
+            </button>
+          </form>
+
+          <div class="lab-cats" role="group" aria-label="예시 카테고리 선택">
+            <button class="lab-cat is-active" type="button" data-cat="fashion" aria-pressed="true">패션·의류</button>
+            <button class="lab-cat" type="button" data-cat="living" aria-pressed="false">리빙·생활</button>
+            <button class="lab-cat" type="button" data-cat="beauty" aria-pressed="false">뷰티·소품</button>
+          </div>
+
+          <p class="lab-fine">아래 수치는 화면 구성을 위한 <b>예시 시뮬레이션</b>이며, 실제 진단 결과는 상품·키워드·경쟁 상황에 따라 달라집니다.</p>
+        </div>
+
+        <div class="lab-result" aria-live="polite">
+          <div class="lab-res-head">
+            <span class="lab-res-title"><i class="lab-live" aria-hidden="true"></i>순위 진단 리포트</span>
+            <span class="lab-tag">예시 시뮬레이션</span>
+          </div>
+
+          <div class="lab-kw-line">
+            <span class="lab-kw-name" id="labKw">원피스 · 패션·의류</span>
+            <span class="lab-kw-time" id="labTime">방금 실행</span>
+          </div>
+
+          <div class="lab-score-main">
+            <span class="lab-score-label">종합 진단 지수</span>
+            <span class="lab-score-num"><strong id="labTotal">71</strong><em>/100</em></span>
+            <span class="lab-score-chip" id="labGrade">보완 필요</span>
+          </div>
+
+          <div class="lab-gauges">
+            <div class="lab-gauge">
+              <span class="lg-name">적합도</span>
+              <span class="lg-track"><i data-lab-bar="fit" style="--w:82%"></i></span>
+              <b class="lg-val" data-lab-val="fit">82</b>
+              <em class="lg-state" data-lab-state="fit">좋음</em>
+            </div>
+            <div class="lab-gauge">
+              <span class="lg-name">인기도</span>
+              <span class="lg-track"><i data-lab-bar="pop" style="--w:64%"></i></span>
+              <b class="lg-val" data-lab-val="pop">64</b>
+              <em class="lg-state" data-lab-state="pop">보통</em>
+            </div>
+            <div class="lab-gauge">
+              <span class="lg-name">신뢰도</span>
+              <span class="lg-track"><i data-lab-bar="trust" style="--w:47%"></i></span>
+              <b class="lg-val" data-lab-val="trust">47</b>
+              <em class="lg-state" data-lab-state="trust">낮음</em>
+            </div>
+          </div>
+
+          <div class="lab-charts">
+            <div class="lab-spark">
+              <span class="lc-cap">노출 추이 · 예시</span>
+              <svg viewBox="0 0 240 82" fill="none" aria-hidden="true">
+                <defs>
+                  <linearGradient id="labFill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#38d6ff" stop-opacity=".38"/>
+                    <stop offset="100%" stop-color="#38d6ff" stop-opacity="0"/>
+                  </linearGradient>
+                  <linearGradient id="labLine" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="#7ea8ff"/>
+                    <stop offset="100%" stop-color="#38d6ff"/>
+                  </linearGradient>
+                </defs>
+                <path class="lab-spark-area" id="labSparkArea" d="M4 66 L4 58 L48 52 L92 55 L136 43 L180 38 L224 26 L236 14 L236 70 L4 70 Z" fill="url(#labFill)"/>
+                <path class="lab-spark-line" id="labSparkLine" d="M4 58 L48 52 L92 55 L136 43 L180 38 L224 26 L236 14" stroke="url(#labLine)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle class="lab-spark-dot" id="labSparkDot" cx="236" cy="14" r="4" fill="#38d6ff"/>
+              </svg>
+            </div>
+
+            <div class="lab-radar">
+              <span class="lc-cap">3축 구조 · 예시</span>
+              <svg viewBox="0 0 220 190" fill="none" aria-hidden="true">
+                <g class="lab-radar-grid">
+                  <polygon points="110,32 172,140 48,140"/>
+                  <polygon points="110,68 151,124 69,124"/>
+                  <polygon points="110,104 130,116 90,116"/>
+                  <path d="M110 32v72M48 140l62-36M172 140l-62-36"/>
+                </g>
+                <g class="lab-radar-shape">
+                  <polygon id="labRadarPoly" points="110,44 165,134 74,130"/>
+                </g>
+                <circle class="lab-radar-core" cx="110" cy="104" r="3"/>
+                <g class="lab-radar-labels">
+                  <text x="110" y="20" text-anchor="middle">적합도</text>
+                  <text x="196" y="164" text-anchor="middle">인기도</text>
+                  <text x="24" y="164" text-anchor="middle">신뢰도</text>
+                </g>
+              </svg>
+            </div>
+          </div>
+
+          <div class="lab-checks-wrap">
+            <p class="lab-checks-title">맞춤 점검 포인트</p>
+            <ul class="lab-checks" id="labChecks">
+              <li>‘원피스’ 검색 상위 상품명에 공통으로 쓰인 단어를 뽑아 상품명 앞쪽부터 맞춥니다.</li>
+              <li>카테고리·속성(소재·핏·계절) 태그를 12개 이상 채웁니다.</li>
+              <li>상세 첫 화면에서 사이즈·모델 정보를 3초 안에 보여줍니다.</li>
+              <li>리뷰 수와 최근 30일 리뷰 증가 속도를 함께 확인합니다.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="sim-sub reveal">
         <p class="eyebrow">DIAGNOSIS PROCESS</p>
-        <h2>상담은 진단에서 시작합니다.<br><span class="mark">3단계</span>로 구조를 보여드립니다.</h2>
+        <h3>상담은 진단에서 시작합니다. <span class="mark">3단계</span>로 구조를 보여드립니다.</h3>
         <p class="sec-lead">스마트스토어와 쿠팡의 노출은 하나의 요소로 결정되지 않습니다. 진단 → 전략 → 검증 순서로 어디를 손대야 하는지 정리합니다.</p>
       </div>
 
@@ -474,7 +599,7 @@
       <div class="sec-head reveal">
         <p class="eyebrow">CORE SOLUTIONS</p>
         <h2>판매로 이어지는 <span class="mark">4대 핵심 영역</span></h2>
-        <p class="sec-lead">스마트스토어부터 쿠팡·오픈마켓까지, 노출과 전환을 함께 다룹니다. 필요한 영역만 골라 진행해도 됩니다.</p>
+        <p class="sec-lead">스마트스토어부터 쿠팡·오픈마켓까지, 노출과 전환을 함께 다룹니다. 카드의 <b>적용 포인트 보기</b>를 누르면 실제 점검 항목이 펼쳐집니다.</p>
       </div>
 
       <div class="sol-grid">
@@ -500,6 +625,29 @@
             <li>속성 · 태그</li>
             <li>굿서비스</li>
           </ul>
+          <button class="sol-toggle" type="button" aria-expanded="false" aria-controls="solDetail1">
+            <span>적용 포인트 보기</span>
+            <svg class="sol-chev" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="sol-detail" id="solDetail1">
+            <div class="sol-detail-inner">
+              <ul class="sol-checks">
+                <li>카테고리·속성에 상품을 정확히 매칭</li>
+                <li>상품명 앞쪽에 핵심 키워드 배치</li>
+                <li>태그 10개 이상 · 중복 단어 정리</li>
+                <li>굿서비스·배송 조건 점검</li>
+              </ul>
+              <div class="sol-mini">
+                <span class="sol-mini-cap">3축 점검 순서 · 예시</span>
+                <div class="sol-mini-bars">
+                  <i style="--h:46%" data-l="적합"></i>
+                  <i style="--h:72%" data-l="인기"></i>
+                  <i style="--h:58%" data-l="신뢰"></i>
+                  <i style="--h:88%" data-l="전환"></i>
+                </div>
+              </div>
+            </div>
+          </div>
         </article>
 
         <article class="sol-card tilt reveal" data-delay="80">
@@ -522,6 +670,29 @@
             <li>아이템위너</li>
             <li>자동가격조정</li>
           </ul>
+          <button class="sol-toggle" type="button" aria-expanded="false" aria-controls="solDetail2">
+            <span>적용 포인트 보기</span>
+            <svg class="sol-chev" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="sol-detail" id="solDetail2">
+            <div class="sol-detail-inner">
+              <ul class="sol-checks">
+                <li>검색어 20개를 우선순위로 배분</li>
+                <li>아이템위너 조건(가격·배송·재고) 정비</li>
+                <li>무료노출·자동가격조정 동시 운영</li>
+                <li>채널별 금지어·표기 규칙 점검</li>
+              </ul>
+              <div class="sol-mini">
+                <span class="sol-mini-cap">채널 세팅 점검 · 예시</span>
+                <div class="sol-mini-bars">
+                  <i style="--h:52%" data-l="검색어"></i>
+                  <i style="--h:44%" data-l="가격"></i>
+                  <i style="--h:76%" data-l="배송"></i>
+                  <i style="--h:68%" data-l="노출"></i>
+                </div>
+              </div>
+            </div>
+          </div>
         </article>
 
         <article class="sol-card tilt reveal" data-delay="160">
@@ -540,6 +711,29 @@
             <li>리뷰 · 체류시간</li>
             <li>변화 측정</li>
           </ul>
+          <button class="sol-toggle" type="button" aria-expanded="false" aria-controls="solDetail3">
+            <span>적용 포인트 보기</span>
+            <svg class="sol-chev" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="sol-detail" id="solDetail3">
+            <div class="sol-detail-inner">
+              <ul class="sol-checks">
+                <li>노출 → 클릭 → 체류 → 구매 이탈 지점 확인</li>
+                <li>한 번에 하나씩 바꿔 효과를 분리</li>
+                <li>주간 단위로 지표 기록·비교</li>
+                <li>안 되면 원인 재탐색 후 재실행</li>
+              </ul>
+              <div class="sol-mini">
+                <span class="sol-mini-cap">주간 지표 흐름 · 예시</span>
+                <div class="sol-mini-bars">
+                  <i style="--h:38%" data-l="1주"></i>
+                  <i style="--h:56%" data-l="2주"></i>
+                  <i style="--h:64%" data-l="3주"></i>
+                  <i style="--h:86%" data-l="4주"></i>
+                </div>
+              </div>
+            </div>
+          </div>
         </article>
 
         <article class="sol-card tilt reveal" data-delay="240">
@@ -562,7 +756,107 @@
             <li>유입 구조 설계</li>
             <li>경쟁사 노출</li>
           </ul>
+          <button class="sol-toggle" type="button" aria-expanded="false" aria-controls="solDetail4">
+            <span>적용 포인트 보기</span>
+            <svg class="sol-chev" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="sol-detail" id="solDetail4">
+            <div class="sol-detail-inner">
+              <ul class="sol-checks">
+                <li>메인 1 : 세부 3 : 롱테일 6 비중으로 구성</li>
+                <li>경쟁 상위 상품의 키워드 조합 비교</li>
+                <li>유입 경로별 착지 페이지 점검</li>
+                <li>검색 유입 → 재방문 흐름 설계</li>
+              </ul>
+              <div class="sol-mini">
+                <span class="sol-mini-cap">키워드 비중 구성 · 예시</span>
+                <div class="sol-mini-bars">
+                  <i style="--h:30%" data-l="메인"></i>
+                  <i style="--h:58%" data-l="세부"></i>
+                  <i style="--h:92%" data-l="롱테일"></i>
+                  <i style="--h:70%" data-l="재방문"></i>
+                </div>
+              </div>
+            </div>
+          </div>
         </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BEFORE / AFTER ============ -->
+  <section class="section compare-section" id="compare">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow light">BEFORE / AFTER</p>
+        <h2>정비 전과 후,<br><span class="grad">직접 밀어서</span> 비교해 보세요.</h2>
+        <p class="sec-lead light">같은 상품이라도 상품명·속성·신뢰 지표를 어떻게 정리하느냐에 따라 검색에서 보이는 모습이 달라집니다. 가운데 손잡이를 좌우로 움직여 보세요.</p>
+      </div>
+
+      <div class="cmp reveal" id="compareWidget">
+        <div class="cmp-stage" id="cmpStage" style="--p:52%">
+          <div class="cmp-layer cmp-before">
+            <div class="cmp-card">
+              <div class="cmp-thumb">
+                <span class="cmp-thumb-tag">이미지</span>
+                <span class="cmp-thumb-line"></span>
+              </div>
+              <div class="cmp-info">
+                <p class="cmp-title">[특가] 가을신상 여성 원피스 롱원피스 데일리룩 할인 판매</p>
+                <div class="cmp-rows">
+                  <div class="cmp-row"><span>상품명 키워드</span><i><b style="--w:34%"></b></i><em>정리 안 됨</em></div>
+                  <div class="cmp-row"><span>속성 · 태그</span><i><b style="--w:28%"></b></i><em>3개</em></div>
+                  <div class="cmp-row"><span>신뢰 지표</span><i><b style="--w:22%"></b></i><em>미비</em></div>
+                </div>
+                <div class="cmp-meta">
+                  <span class="cmp-rank r-before">노출 12위</span>
+                  <span class="cmp-chip">카테고리 부정확</span>
+                  <span class="cmp-chip">리뷰 적음</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cmp-layer cmp-after">
+            <div class="cmp-card">
+              <div class="cmp-thumb">
+                <span class="cmp-thumb-tag">이미지</span>
+                <span class="cmp-thumb-line"></span>
+              </div>
+              <div class="cmp-info">
+                <p class="cmp-title">가을 원피스 롱원피스 여성 데일리룩</p>
+                <div class="cmp-rows">
+                  <div class="cmp-row"><span>상품명 키워드</span><i><b style="--w:92%"></b></i><em>앞쪽 배치</em></div>
+                  <div class="cmp-row"><span>속성 · 태그</span><i><b style="--w:84%"></b></i><em>14개</em></div>
+                  <div class="cmp-row"><span>신뢰 지표</span><i><b style="--w:76%"></b></i><em>정비 완료</em></div>
+                </div>
+                <div class="cmp-meta">
+                  <span class="cmp-rank r-after">노출 3위</span>
+                  <span class="cmp-chip ok">카테고리 일치</span>
+                  <span class="cmp-chip ok">굿서비스</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <span class="cmp-badge cmp-badge-before">정비 전</span>
+          <span class="cmp-badge cmp-badge-after">정비 후</span>
+
+          <div class="cmp-divider" aria-hidden="true">
+            <span class="cmp-handle">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M9 8l-4 4 4 4M15 8l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+
+          <input class="cmp-range" id="cmpRange" type="range" min="0" max="100" step="1" value="52" aria-label="정비 전후 비교 슬라이더" aria-valuetext="52퍼센트">
+        </div>
+
+        <div class="cmp-controls">
+          <button class="btn btn-plain btn-sm" id="cmpToggle" type="button" aria-pressed="false">정비 후 화면 전체 보기</button>
+          <p class="cmp-hint">마우스·터치로 손잡이를 드래그하거나, 버튼으로 한 번에 전환할 수 있습니다.</p>
+        </div>
+
+        <p class="cmp-note">화면은 진단 항목을 이해하기 쉽게 구성한 <b>예시</b>입니다. 실제 노출 순위와 결과는 상품·키워드·경쟁 상황에 따라 달라집니다.</p>
       </div>
     </div>
   </section>
@@ -600,28 +894,30 @@
       </div>
 
       <div class="data-visual reveal" data-delay="120">
-        <img src="assets/data-insight.webp" alt="데이터 대시보드를 형상화한 3D 그래픽" width="1100" height="979" loading="lazy" decoding="async">
+        <img src="assets/data-insight.webp" alt="데이터 대시보드를 형상화한 3D 그래픽" width="1100" height="979" loading="lazy" decoding="async" data-parallax="0.03">
         <div class="radar-card">
           <div class="radar-head">
             <span>3축 진단 구조</span>
             <span class="radar-tag">예시</span>
           </div>
-          <svg class="radar" viewBox="0 0 260 220" fill="none" aria-hidden="true">
-            <g class="radar-grid">
-              <polygon points="130,26 214,110 130,194 46,110" />
-              <polygon points="130,52 188,110 130,168 72,110" />
-              <polygon points="130,78 162,110 130,142 98,110" />
-              <path d="M130 26V194M46 110h168" />
-            </g>
-            <g class="radar-shape">
-              <polygon points="130,44 196,110 130,166 64,110" />
-            </g>
-            <circle class="radar-core" cx="130" cy="110" r="3.5"/>
-          </svg>
-          <div class="radar-labels" aria-hidden="true">
-            <span class="rl-top">적합도</span>
-            <span class="rl-right">인기도</span>
-            <span class="rl-left">신뢰도</span>
+          <div class="radar-plot">
+            <svg class="radar" viewBox="0 0 260 220" fill="none" aria-hidden="true">
+              <g class="radar-grid">
+                <polygon points="130,32 197,149 63,149"/>
+                <polygon points="130,58 175,136 85,136"/>
+                <polygon points="130,84 152,123 108,123"/>
+                <path d="M130 32v78M63 149l67-39M197 149l-67-39"/>
+              </g>
+              <g class="radar-shape">
+                <polygon id="dataRadarPoly" points="130,51 183,141 80,134"/>
+              </g>
+              <circle class="radar-core" cx="130" cy="110" r="3.5"/>
+              <g class="radar-labels">
+                <text x="130" y="18" text-anchor="middle">적합도</text>
+                <text x="228" y="178" text-anchor="middle">인기도</text>
+                <text x="32" y="178" text-anchor="middle">신뢰도</text>
+              </g>
+            </svg>
           </div>
         </div>
       </div>
@@ -769,7 +1065,7 @@
 
   <!-- ============ CTA ============ -->
   <section class="cta-section" id="contact">
-    <img class="cta-bg" src="assets/keyword-network.webp" alt="" aria-hidden="true" width="1536" height="1024" loading="lazy" decoding="async">
+    <img class="cta-bg" src="assets/keyword-network.webp" alt="" aria-hidden="true" width="1536" height="1024" loading="lazy" decoding="async" data-parallax="0.05">
     <div class="cta-veil" aria-hidden="true"></div>
     <div class="wrap cta-inner reveal">
       <p class="eyebrow light">CONTACT</p>
@@ -787,16 +1083,23 @@
         </a>
       </div>
 
-      <a class="cta-phone" href="tel:01076129292">
-        <span class="cp-ico" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M6.6 3.8h2.7c.5 0 .9.3 1 .8l.7 2.9c.1.4-.1.8-.4 1l-1.7 1.2a12 12 0 0 0 5.3 5.3l1.2-1.7c.2-.3.6-.5 1-.4l2.9.7c.5.1.8.5.8 1v2.7c0 1.3-1.1 2.4-2.4 2.3C9.6 19 5 14.4 4.3 6.2 4.2 4.9 5.3 3.8 6.6 3.8Z" stroke="currentColor" stroke-width="1.5"/></svg>
-        </span>
-        <span class="cp-body">
-          <small>쇼핑순위연구소 상담번호</small>
-          <strong>010 7612 9292</strong>
-        </span>
-        <span class="cp-go">전화 걸기</span>
-      </a>
+      <div class="cta-phone-row">
+        <a class="cta-phone" href="tel:01076129292">
+          <span class="cp-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M6.6 3.8h2.7c.5 0 .9.3 1 .8l.7 2.9c.1.4-.1.8-.4 1l-1.7 1.2a12 12 0 0 0 5.3 5.3l1.2-1.7c.2-.3.6-.5 1-.4l2.9.7c.5.1.8.5.8 1v2.7c0 1.3-1.1 2.4-2.4 2.3C9.6 19 5 14.4 4.3 6.2 4.2 4.9 5.3 3.8 6.6 3.8Z" stroke="currentColor" stroke-width="1.5"/></svg>
+          </span>
+          <span class="cp-body">
+            <small>쇼핑순위연구소 상담번호</small>
+            <strong>010 7612 9292</strong>
+          </span>
+          <span class="cp-go">전화 걸기</span>
+        </a>
+        <button class="btn btn-copy btn-lg" type="button" data-copy-phone>
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.4" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="M15 5.5A2.5 2.5 0 0 0 12.5 3H6.5A2.5 2.5 0 0 0 4 5.5v6A2.5 2.5 0 0 0 6.5 14" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+          번호 복사
+        </button>
+      </div>
+
       <p class="cta-note">상품찜 무료 지원은 정보교류방 입장 후 방장에게 말을 걸어주시면 안내해 드립니다.</p>
     </div>
   </section>
@@ -830,12 +1133,13 @@
         <h4>상담</h4>
         <a href="https://open.kakao.com/o/smnMRaYi" target="_blank" rel="noopener">마케팅 1:1 오픈카톡</a>
         <a href="tel:01076129292">전화 상담 010 7612 9292</a>
+        <button class="footer-copy" type="button" data-copy-phone>상담번호 복사</button>
       </div>
       <div>
         <h4>바로가기</h4>
-        <a href="#why">연구소 소개</a>
+        <a href="#sim">진단 시뮬레이터</a>
+        <a href="#compare">정비 전후 비교</a>
         <a href="#solutions">핵심 솔루션</a>
-        <a href="#channels">운영 채널</a>
       </div>
     </nav>
   </div>
@@ -858,6 +1162,54 @@
   </a>
 </div>
 
-<script src="script.js?v=12" defer></script>
+<!-- ============ CONSULT MODAL ============ -->
+<div class="modal" id="consultModal" role="dialog" aria-modal="true" aria-labelledby="consultTitle" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-panel" id="consultPanel" role="document">
+    <button class="modal-close" type="button" data-close-modal aria-label="상담 안내 닫기">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <p class="eyebrow">1:1 CONSULT</p>
+    <h2 id="consultTitle">상담 안내</h2>
+    <p class="modal-lead">지금 막힌 지점을 편하게 이야기해 주세요. <b>진단 → 전략 → 검증</b> 순서로 무엇부터 손대야 하는지 정리해 드립니다.</p>
+
+    <div class="modal-actions">
+      <a class="btn btn-primary" href="https://open.kakao.com/o/smnMRaYi" target="_blank" rel="noopener">
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4c-4.7 0-8.5 3-8.5 6.8 0 2.4 1.5 4.5 3.9 5.8l-.8 3.1c-.1.4.3.7.7.5l3.6-2.3c.4.1.7.1 1.1.1 4.7 0 8.5-3 8.5-6.8S16.7 4 12 4Z"/></svg>
+        마케팅 1:1 오픈카톡 상담
+      </a>
+      <a class="btn btn-kakao" href="https://open.kakao.com/o/gnQHf3Xi" target="_blank" rel="noopener">
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11a3.2 3.2 0 1 0 0-6.4A3.2 3.2 0 0 0 9 11Zm7.5.6a2.7 2.7 0 1 0 0-5.4 2.7 2.7 0 0 0 0 5.4ZM9 12.8c-3.1 0-5.6 1.7-5.6 3.8v1.6h11.2v-1.6c0-2.1-2.5-3.8-5.6-3.8Zm7.5.6c-1 0-1.9.2-2.7.5 1.1.9 1.8 2 1.8 3.3v1h5v-1.4c0-1.9-1.8-3.4-4.1-3.4Z"/></svg>
+        정보교류방 입장
+      </a>
+    </div>
+
+    <div class="modal-phone">
+      <div class="mp-body">
+        <small>쇼핑순위연구소 상담번호</small>
+        <strong>010 7612 9292</strong>
+      </div>
+      <div class="mp-actions">
+        <a class="btn btn-plain btn-sm" href="tel:01076129292">전화 걸기</a>
+        <button class="btn btn-copy btn-sm" type="button" data-copy-phone>번호 복사</button>
+      </div>
+    </div>
+
+    <ul class="modal-list">
+      <li><b>오픈카톡 1:1</b> — 마케팅 상담 전용 창구</li>
+      <li><b>정보교류방</b> — 입장 후 방장에게 말 걸면 상품찜 무료 지원</li>
+      <li><b>전화</b> — 010 7612 9292</li>
+    </ul>
+    <p class="modal-note">상담할 때 상품 링크와 메인 키워드를 함께 주시면 진단이 더 빠릅니다.</p>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+<button class="to-top" id="toTop" type="button" aria-label="맨 위로 이동">
+  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 19V6M6 11l6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<script src="script.js?v=13" defer></script>
 </body>
 </html>
