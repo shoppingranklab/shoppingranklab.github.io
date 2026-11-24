@@ -281,7 +281,7 @@ body.nav-open .nav-toggle span:nth-child(3){transform:translateY(-6px) rotate(-4
   font-size:10.5px;color:#9dbcff;
 }
 .float-chip b{font-size:12.5px;color:#fff;font-weight:700}
-.chip-a{top:-16px;left:-14px;right:auto;animation:floaty 8.5s ease-in-out infinite .4s}
+.chip-a{top:22px;left:-18px;right:auto;animation:floaty 8.5s ease-in-out infinite .4s}
 .chip-b{bottom:22px;right:-16px;flex-direction:row;align-items:center;gap:8px;animation:floaty 9.5s ease-in-out infinite .9s}
 .chip-ico{width:22px;height:22px;border-radius:7px;background:rgba(56,214,255,.12);display:grid;place-items:center}
 .chip-ico svg{width:14px;height:14px}
