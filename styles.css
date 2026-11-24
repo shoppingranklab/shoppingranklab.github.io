@@ -1396,7 +1396,7 @@ body.nav-open .nav-toggle{background:#fff;border-color:var(--line);color:var(--i
   .lab-gauge{grid-template-columns:38px minmax(0,1fr) 26px 32px;gap:7px}
   .lab-score-num strong{font-size:34px}
   .lab-run{flex:1 1 100%}
-  .cmp-stage{height:372px}
+  .cmp-stage{height:356px}
   .cmp-layer{padding:38px 18px 18px;align-items:flex-start}
   .cmp-card{grid-template-columns:1fr;gap:12px;align-items:start}
   .cmp-thumb{width:78px;aspect-ratio:1/1;justify-self:start}
@@ -1422,7 +1422,7 @@ body.nav-open .nav-toggle{background:#fff;border-color:var(--line);color:var(--i
 @media (max-width:420px){
   .lab-input-row input{height:46px}
   .lab-cat{font-size:12px;padding:7px 12px}
-  .cmp-stage{height:388px}
+  .cmp-stage{height:340px}
   .sol-mini-bars{height:58px}
 }
 
