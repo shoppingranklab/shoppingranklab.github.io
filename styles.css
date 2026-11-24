@@ -113,7 +113,7 @@ section[id],div[id="top"]{scroll-margin-top:96px}
 }
 .site-header.scrolled .header-inner{height:68px}
 
-.brand{display:inline-flex;align-items:center;gap:11px}
+.brand{position:relative;z-index:3;display:inline-flex;align-items:center;gap:11px}
 .brand-mark{
   width:38px;height:38px;border-radius:12px;display:grid;place-items:center;flex:none;
   background:linear-gradient(150deg,#1b4fe0,#0a1730);
@@ -133,7 +133,7 @@ section[id],div[id="top"]{scroll-margin-top:96px}
 }
 .nav > a:not(.nav-cta):hover::after{transform:scaleX(1)}
 .nav-cta{display:none}
-.header-actions{display:flex;align-items:center;gap:10px}
+.header-actions{position:relative;z-index:3;display:flex;align-items:center;gap:10px}
 .nav-toggle{
   display:none;width:42px;height:42px;border-radius:12px;border:1px solid rgba(255,255,255,.2);
   background:rgba(255,255,255,.06);padding:0;cursor:pointer;position:relative;
