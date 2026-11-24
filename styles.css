@@ -1252,8 +1252,8 @@ body.nav-open .nav-toggle{background:#fff;border-color:var(--line);color:var(--i
   position:absolute;top:14px;z-index:4;pointer-events:none;
   font-size:10.5px;font-weight:800;letter-spacing:.06em;border-radius:999px;padding:5px 11px;
 }
-.cmp-badge-before{left:14px;color:#b6c8e6;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16)}
-.cmp-badge-after{right:14px;color:#7fe6ff;background:rgba(56,214,255,.15);border:1px solid rgba(56,214,255,.4)}
+.cmp-badge-before{right:14px;color:#b6c8e6;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16)}
+.cmp-badge-after{left:14px;color:#7fe6ff;background:rgba(56,214,255,.15);border:1px solid rgba(56,214,255,.4)}
 .cmp-divider{
   position:absolute;top:0;bottom:0;left:var(--p,52%);width:2px;transform:translateX(-1px);
   background:linear-gradient(180deg,rgba(56,214,255,0),#38d6ff 16%,#38d6ff 84%,rgba(56,214,255,0));
