@@ -651,7 +651,7 @@ body.nav-open .nav-toggle span:nth-child(3){transform:translateY(-6px) rotate(-4
 .cf-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
 .cf-visual{position:relative;display:grid;place-items:center}
 .cf-visual img{
-  width:min(280px,100%);border-radius:24px;
+  width:min(280px,100%);height:auto;border-radius:24px;
   filter:drop-shadow(0 30px 40px rgba(20,50,110,.18));
   animation:floaty 8s ease-in-out infinite;
 }
@@ -852,10 +852,11 @@ body.nav-open .nav-toggle span:nth-child(3){transform:translateY(-6px) rotate(-4
 
   .why-grid{grid-template-columns:1fr;gap:12px}
   .stats{grid-template-columns:repeat(2,1fr)}
-  .sim{grid-template-columns:1fr;gap:18px}
-  .sim-tabs{flex-direction:row;overflow-x:auto;gap:8px;padding-bottom:4px;scrollbar-width:none}
+  .sim{grid-template-columns:minmax(0,1fr);gap:18px}
+  .sim-side,.sim-stage{min-width:0}
+  .sim-tabs{flex-direction:row;flex-wrap:nowrap;width:100%;min-width:0;overflow-x:auto;gap:8px;padding-bottom:4px;scrollbar-width:none}
   .sim-tabs::-webkit-scrollbar{display:none}
-  .sim-tab{grid-template-columns:1fr;min-width:186px;gap:6px;padding:14px 15px}
+  .sim-tab{grid-template-columns:1fr;flex:0 0 auto;min-width:186px;gap:6px;padding:14px 15px}
   .sim-tab .tab-no{font-size:10.5px}
   .sim-tab .tab-arrow{display:none}
   .sim-cta{margin-top:14px}
@@ -898,7 +899,7 @@ body.nav-open .nav-toggle span:nth-child(3){transform:translateY(-6px) rotate(-4
   .stat-num{font-size:32px}
   .why-card{padding:26px 22px}
   .stat-card{padding:20px 18px}
-  .sim-tab{min-width:170px}
+  .sim-tab{min-width:168px}
   .sim-stage{padding:13px}
   .mock-body{padding:14px}
   .report-bars{height:64px}
