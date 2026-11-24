@@ -150,6 +150,11 @@ body.nav-open .nav-toggle span:nth-child(1){transform:translateY(6px) rotate(45d
 body.nav-open .nav-toggle span:nth-child(2){opacity:0}
 body.nav-open .nav-toggle span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
 
+body.nav-open .site-header{
+  background:rgba(255,255,255,.98);color:var(--ink);
+  box-shadow:0 1px 0 rgba(207,220,240,.9);
+}
+body.nav-open .site-header .brand-mark{background:linear-gradient(150deg,#1b4fe0,#0a1730)}
 .scroll-progress{
   position:absolute;left:0;bottom:0;height:2px;width:0;
   background:linear-gradient(90deg,#2f6bff,#38d6ff);
