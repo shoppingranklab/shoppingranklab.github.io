@@ -114,6 +114,15 @@
     return '<span class="badge is-' + p.category + '">' + TYPE[p.category].label + '</span>';
   }
   function pad(n) { return String(n).padStart(2, '0'); }
+  function subLine(p) {
+    var parts = [TYPE[p.category].label];
+    if (p.foodType && p.foodType !== TYPE[p.category].label) parts.push(p.foodType);
+    if (p.form) parts.push(p.form);
+    return parts.join(' · ');
+  }
+  function metaText(p) {
+    return p.foodType && p.foodType !== TYPE[p.category].label ? p.foodType : p.form;
+  }
 
   /* ---------------- header ---------------- */
   var header = document.getElementById('siteHeader');
@@ -199,8 +208,9 @@
     ciList.innerHTML = PRODUCTS.map(function (p, i) {
       return '<li><button class="ci-item" type="button" data-open="' + p.key + '" aria-label="' + esc(p.name) + ' 상세 정보 열기">' +
         '<span class="ci-idx">' + pad(i + 1) + '</span>' +
+        '<span class="ci-thumb"><img src="' + p.img + '" width="80" height="80" alt="" loading="lazy"></span>' +
         '<span class="ci-body"><span class="ci-name">' + esc(p.name) + '</span>' +
-        '<span class="ci-meta">' + typeBadge(p) + '<span>' + esc(p.foodType) + '</span></span></span>' +
+        '<span class="ci-meta">' + typeBadge(p) + '<span>' + esc(metaText(p)) + '</span></span></span>' +
         '<span class="ci-price">' + won(p.price) + '</span>' +
         '</button></li>';
     }).join('');
@@ -270,7 +280,7 @@
       '<div class="card-body">' +
       '<div class="card-top"><span class="card-num">' + num + '</span><span>' + p.en + '</span></div>' +
       '<h3 class="card-name">' + esc(p.name) + '</h3>' +
-      '<p class="card-sub">' + TYPE[p.category].label + ' · ' + esc(p.foodType) + ' · ' + esc(p.form) + '</p>' +
+      '<p class="card-sub">' + esc(subLine(p)) + '</p>' +
       '<p class="card-desc">' + esc(p.desc) + '</p>' +
       '<ul class="chip-row">' + p.chips.slice(0, 3).map(function (c) { return '<li>' + esc(c) + '</li>'; }).join('') + '</ul>' +
       '<div class="card-foot">' +
@@ -387,7 +397,6 @@
     var head = table.querySelector('thead');
     var body = table.querySelector('tbody');
     var rows = [
-      ['유형', function (p) { return '<span class="badge is-' + p.category + '">' + TYPE[p.category].label + '</span>'; }],
       ['식품유형', function (p) { return p.foodType; }],
       ['성상', function (p) { return p.form; }],
       ['내용량', function (p) { return p.content; }],
@@ -454,7 +463,6 @@
       ['성상', p.form],
       ['내용량', p.content],
       ['섭취 방법', p.serving],
-      [p.store + ' 성분', p.chips.join(' · ')],
       ['원재료·주요 성분', p.ingredients]
     ];
     modalSpecs.innerHTML = specs.map(function (s) {
