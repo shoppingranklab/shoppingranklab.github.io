@@ -1,7 +1,7 @@
 /* =========================================================
    Dr.Ology — brand store interactions
    Product data driven: add an object to PRODUCTS and the
-   filter, cards, compare table, hero index and footer
+   filter, cards, compare table, hero index and modal
    update automatically.
    ========================================================= */
 (function () {
@@ -13,7 +13,12 @@
   var stillMode = /(?:^|[?&])still=1(?:&|$)/.test(window.location.search);
   if (stillMode) document.documentElement.classList.add('still');
 
-  /* ---------------- data ---------------- */
+  /* ---------------- data ----------------
+     category: 'hff' (건강기능식품) | 'general' (일반식품)
+       → 상품 상세·스펙 비교표의 '식품유형' 한 줄로만 표기합니다.
+     일반식품 설명은 원료명·함량·산지·제형·맛·섭취 방법만 담습니다.
+     hff 의 functionality 는 식약처 인정 기능성 내용만 적습니다.
+  ---------------------------------------- */
   var SHOP = 'https://cestlavie4705.cafe24.com/';
 
   var PRODUCTS = [
@@ -24,13 +29,17 @@
       short: '콜라겐',
       category: 'general',
       foodType: '액상차',
+      formKey: 'stick',
       form: '액상 스틱',
+      pack: '20 g × 14포',
       content: '280 g (20 g × 14포)',
       serving: '1일 1회, 1회 1포(20 g)',
       store: '1포(20 g)당',
       ingredients: '정제수, 블루베리농축액[65Brix/배합함량:블루베리 100%/미국산], 피쉬콜라겐 펩타이드(캐나다산), 비타민C(영국산), 엘라스틴(프랑스산), 히알루론산(미국산), 비오틴(프랑스산)',
-      desc: '블루베리농축액에 피쉬콜라겐 펩타이드와 엘라스틴, 히알루론산, 비오틴, 비타민C를 담은 액상 스틱입니다. 스틱 한 포를 그대로 섭취합니다.',
+      desc: '캐나다산 피쉬콜라겐 펩타이드 1포 3,000mg에 프랑스산 엘라스틴, 미국산 히알루론산, 비오틴, 영국산 비타민C를 함께 담았습니다. 블루베리농축액을 베이스로 한 상큼한 액상 스틱으로, 물 없이 그대로 섭취합니다.',
       chips: ['피쉬콜라겐 3,000mg', '엘라스틴 100mg', '히알루론산 120mg', '비오틴 300㎍', '비타민C 200mg'],
+      origins: ['캐나다산 피쉬콜라겐', '프랑스산 엘라스틴', '미국산 히알루론산', '영국산 비타민C'],
+      howto: '물 없이 스틱 한 포를 그대로',
       price: 86000,
       accent: '#6FB9DF',
       accentDeep: '#1D6E96',
@@ -44,13 +53,17 @@
       short: '멜라토닌',
       category: 'general',
       foodType: '과채가공품',
-      form: '정',
+      formKey: 'tablet',
+      form: '정제',
+      pack: '500 mg × 60정',
       content: '500 mg × 60정 (30 g)',
       serving: '1일 1회, 1회 1정을 자기 전 충분한 물과 함께',
       store: '1정(500 mg)당',
       ingredients: '타트체리추출분말(미국산/신양벚나무열매분말 100%) 20%, 말토덱스트린, 산화마그네슘, L-트립토판, 테아닌, 옥수수전분[옥수수 100%(외국산: 러시아, 헝가리, 세르비아 등)], 시게풋(잎)추출분말, 레몬분말추출분말, 캐모마일추출분말, 대나무수액추출분말, 루브리102H, 혼합제제(주정, 정제백크라), 비타민B6염산염',
-      desc: '타트체리추출분말과 식물성 멜라토닌에 L-트립토판, 테아닌, 마그네슘, 비타민B6를 담은 정제입니다. 자기 전 한 정을 충분한 물과 함께 섭취합니다.',
+      desc: '미국산 타트체리추출분말에 식물성 멜라토닌 2mg과 L-트립토판·테아닌·마그네슘·비타민B6를 더한 정제입니다. 하루 한 정, 자기 전 물 한 잔과 함께 섭취합니다.',
       chips: ['식물성 멜라토닌 2mg', 'L-트립토판 60mg', '테아닌 50mg', '마그네슘 50mg', '비타민B6 1.5mg'],
+      origins: ['미국산 타트체리추출분말', '식물성 멜라토닌'],
+      howto: '물 한 잔과 함께 한 정',
       price: 86000,
       accent: '#8187CE',
       accentDeep: '#41468F',
@@ -64,13 +77,22 @@
       short: '엽산',
       category: 'hff',
       foodType: '건강기능식품',
-      form: '정',
+      formKey: 'tablet',
+      form: '정제',
+      pack: '500 mg × 60정',
       content: '500 mg × 60정 (30 g)',
       serving: '1일 1회, 1일 1정을 충분한 물과 함께',
       store: '1정(500 mg)당',
       ingredients: 'Quatrefolic 활성형 엽산(5-MTHF) 800㎍ DFE, 비타민D, 비타민B1·B2·B6·B12, 비오틴, 아연, 비타민C 함유 (제품 라벨 표기)',
       desc: 'Quatrefolic 활성형 엽산 800㎍ DFE와 비타민D 1,000IU, 비타민B군·비오틴·아연·비타민C를 담은 건강기능식품입니다. 1일 1정을 충분한 물과 함께 섭취합니다.',
+      functionality: [
+        '세포와 혈액생성에 필요',
+        '태아 신경관의 정상 발달에 필요',
+        '혈액의 호모시스테인 수준을 정상으로 유지하는데 필요'
+      ],
       chips: ['활성형 엽산 800㎍ DFE', '비타민D 1,000IU', '비타민B군', '비오틴·아연'],
+      origins: ['Quatrefolic 활성형 엽산'],
+      howto: '물 한 잔과 함께 한 정',
       price: 86000,
       accent: '#4FA98C',
       accentDeep: '#1F6D59',
@@ -84,13 +106,17 @@
       short: '글루타치온',
       category: 'general',
       foodType: '음료베이스',
-      form: '정',
+      formKey: 'tablet',
+      form: '정제',
+      pack: '600 mg × 30정',
       content: '600 mg × 30정 (18 g)',
       serving: '1일 1회, 1회 1정을 충분한 물과 함께',
       store: '1정(600 mg)당',
       ingredients: 'L-글루타치온효모추출물50(영국산), 비타민C(영국산), 대나무수액추출물분말, 가공유지(유채유 100%)',
-      desc: '영국산 L-글루타치온 효모추출물과 영국산 비타민C, 대나무수액추출물분말을 담은 정제입니다. 1일 1정을 충분한 물과 함께 섭취합니다.',
+      desc: '영국산 L-글루타치온 효모추출물 500mg과 영국산 비타민C, 대나무수액추출분말을 한 정에 담았습니다. 1정이 600mg인 작은 정제로, 1일 1정을 물과 함께 섭취합니다.',
       chips: ['글루타치온 효모추출물 500mg', '비타민C 50mg', '영국산 원료'],
+      origins: ['영국산 글루타치온 효모추출물', '영국산 비타민C'],
+      howto: '물 한 잔과 함께 한 정',
       price: 100000,
       accent: '#D2A044',
       accentDeep: '#8A6218',
@@ -99,9 +125,9 @@
     }
   ];
 
-  var TYPE = {
-    hff: { label: '건강기능식품', en: 'HEALTH FUNCTIONAL FOOD' },
-    general: { label: '일반식품', en: 'GENERAL FOOD' }
+  var FORM = {
+    stick: '액상 스틱',
+    tablet: '정제'
   };
 
   function won(n) { return n.toLocaleString('ko-KR') + '원'; }
@@ -110,25 +136,16 @@
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
     });
   }
-  function typeBadge(p) {
-    return '<span class="badge is-' + p.category + '">' + TYPE[p.category].label + '</span>';
-  }
   function pad(n) { return String(n).padStart(2, '0'); }
   function subLine(p) {
-    var parts = [TYPE[p.category].label];
-    if (p.foodType && p.foodType !== TYPE[p.category].label) parts.push(p.foodType);
-    if (p.form) parts.push(p.form);
-    return parts.join(' · ');
-  }
-  function metaText(p) {
-    return p.foodType && p.foodType !== TYPE[p.category].label ? p.foodType : p.form;
+    return [p.form, p.pack].filter(Boolean).join(' · ');
   }
 
   /* ---------------- header ---------------- */
   var header = document.getElementById('siteHeader');
   var toTop = document.getElementById('toTop');
   var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav a[data-nav]'));
-  var navTargets = ['story', 'collection', 'types', 'compare', 'faq']
+  var navTargets = ['story', 'standard', 'collection', 'compare', 'faq']
     .map(function (id) { return document.getElementById(id); })
     .filter(Boolean);
 
@@ -182,24 +199,18 @@
   }
 
   /* ---------------- counts / hero ---------------- */
-  var counts = { all: PRODUCTS.length, hff: 0, general: 0 };
-  PRODUCTS.forEach(function (p) { counts[p.category] += 1; });
+  var counts = { all: PRODUCTS.length, stick: 0, tablet: 0 };
+  PRODUCTS.forEach(function (p) {
+    if (counts[p.formKey] !== undefined) counts[p.formKey] += 1;
+  });
 
   Array.prototype.forEach.call(document.querySelectorAll('[data-count]'), function (el) {
     var k = el.getAttribute('data-count');
     if (counts[k] === undefined) return;
-    el.textContent = el.tagName === 'B' ? counts[k] : pad(counts[k]) + '종';
+    el.textContent = counts[k];
   });
   var mCountAll = document.getElementById('mCountAll');
   if (mCountAll) mCountAll.textContent = pad(counts.all);
-
-  var heroStats = document.getElementById('heroStats');
-  if (heroStats) {
-    heroStats.innerHTML =
-      '<div><dt>전체 제품</dt><dd>' + pad(counts.all) + '<small>종</small></dd></div>' +
-      '<div><dt>건강기능식품</dt><dd>' + pad(counts.hff) + '<small>종</small></dd></div>' +
-      '<div><dt>일반식품</dt><dd>' + pad(counts.general) + '<small>종</small></dd></div>';
-  }
 
   var ciCount = document.getElementById('ciCount');
   if (ciCount) ciCount.textContent = 'TOTAL ' + pad(counts.all);
@@ -210,7 +221,7 @@
         '<span class="ci-idx">' + pad(i + 1) + '</span>' +
         '<span class="ci-thumb"><img src="' + p.img + '" width="80" height="80" alt="" loading="lazy"></span>' +
         '<span class="ci-body"><span class="ci-name">' + esc(p.name) + '</span>' +
-        '<span class="ci-meta">' + typeBadge(p) + '<span>' + esc(metaText(p)) + '</span></span></span>' +
+        '<span class="ci-meta">' + esc(subLine(p)) + '</span></span>' +
         '<span class="ci-price">' + won(p.price) + '</span>' +
         '</button></li>';
     }).join('');
@@ -221,22 +232,9 @@
   if (ticker) {
     var words = ['DR.OLOGY'];
     PRODUCTS.forEach(function (p) { words.push(p.en); });
-    words.push('MEDICAL DIRECTOR OWNED', 'HEALTH FUNCTIONAL FOOD', 'GENERAL FOOD');
+    words.push('FORMULATED BY A PHYSICIAN', 'DAILY ROUTINE', 'SELECTED INGREDIENTS');
     var seq = words.map(function (w) { return '<span>' + w + '</span><i></i>'; }).join('');
     ticker.innerHTML = seq + seq;
-  }
-
-  /* type cards */
-  Array.prototype.forEach.call(document.querySelectorAll('[data-products]'), function (el) {
-    var k = el.getAttribute('data-products');
-    el.innerHTML = PRODUCTS.filter(function (p) { return p.category === k; })
-      .map(function (p) { return '<li>' + esc(p.name) + '</li>'; }).join('');
-  });
-
-  /* footer type lines */
-  var footerTypes = document.getElementById('footerTypes');
-  if (footerTypes) {
-    footerTypes.innerHTML = '<span>건강기능식품 ' + pad(counts.hff) + '</span><span>일반식품 ' + pad(counts.general) + '</span><span>전체 ' + pad(counts.all) + '</span>';
   }
 
   /* ---------------- collection state ---------------- */
@@ -251,10 +249,10 @@
   var emptyReset = document.getElementById('emptyReset');
 
   function matches(p) {
-    if (state.filter !== 'all' && p.category !== state.filter) return false;
+    if (state.filter !== 'all' && p.formKey !== state.filter) return false;
     if (!state.query) return true;
     var q = state.query.toLowerCase();
-    var hay = [p.name, p.short, p.en, p.foodType, p.form, p.serving, p.ingredients, p.chips.join(' ')].join(' ').toLowerCase();
+    var hay = [p.name, p.short, p.en, p.form, p.pack, p.serving, p.ingredients, p.origins.join(' '), p.chips.join(' ')].join(' ').toLowerCase();
     return hay.indexOf(q) > -1;
   }
 
@@ -275,7 +273,6 @@
     return '<article class="product-card" data-key="' + p.key + '" id="product-' + p.key + '">' +
       '<button class="card-media" type="button" data-open="' + p.key + '" aria-label="' + esc(p.name) + ' 상세 정보 열기">' +
       '<img src="' + p.img + '" width="500" height="500" alt="' + esc(p.name) + ' 패키지" loading="' + (i < 2 ? 'eager' : 'lazy') + '">' +
-      typeBadge(p) +
       '</button>' +
       '<div class="card-body">' +
       '<div class="card-top"><span class="card-num">' + num + '</span><span>' + p.en + '</span></div>' +
@@ -306,7 +303,7 @@
     }
     if (emptyBox) emptyBox.hidden = list.length > 0;
     if (resultLine) {
-      var filterLabel = state.filter === 'all' ? '전체' : TYPE[state.filter].label;
+      var filterLabel = state.filter === 'all' ? '전체' : FORM[state.filter];
       var parts = [filterLabel];
       if (state.query) parts.push('“' + state.query + '” 검색');
       resultLine.textContent = parts.join(' · ') + ' — ' + list.length + '개 제품';
@@ -322,32 +319,6 @@
         x.setAttribute('aria-pressed', on ? 'true' : 'false');
       });
       renderGrid(true);
-    });
-  });
-
-  function setFilter(key, scroll) {
-    state.filter = key;
-    filterBtns.forEach(function (x) {
-      var on = x.getAttribute('data-filter') === key;
-      x.classList.toggle('is-active', on);
-      x.setAttribute('aria-pressed', on ? 'true' : 'false');
-    });
-    renderGrid(true);
-    if (scroll) {
-      var target = document.getElementById('collection');
-      if (target) {
-        var h = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h'), 10) || 72;
-        window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - h - 12, behavior: reduceMotion ? 'auto' : 'smooth' });
-        history.replaceState(null, '', '#collection');
-      }
-    }
-  }
-
-  Array.prototype.forEach.call(document.querySelectorAll('[data-filter-link]'), function (a) {
-    a.addEventListener('click', function (e) {
-      e.preventDefault();
-      setMenu(false);
-      setFilter(a.getAttribute('data-filter-link'), true);
     });
   });
 
@@ -397,18 +368,19 @@
     var head = table.querySelector('thead');
     var body = table.querySelector('tbody');
     var rows = [
-      ['식품유형', function (p) { return p.foodType; }],
       ['성상', function (p) { return p.form; }],
       ['내용량', function (p) { return p.content; }],
-      ['섭취 방법', function (p) { return p.serving; }],
-      ['주요 원료', function (p) { return p.chips.join('<br>'); }],
+      ['1일 섭취량·방법', function (p) { return p.serving; }],
+      ['주요 원료·함량', function (p) { return p.chips.join('<br>'); }],
+      ['원료 산지', function (p) { return p.origins.join('<br>'); }],
+      ['식품유형', function (p) { return p.foodType; }],
       ['가격', function (p) { return '<span class="td-price">' + won(p.price) + '</span>'; }]
     ];
     head.innerHTML = '<tr><th scope="col" class="row-head">구분</th>' + PRODUCTS.map(function (p) {
       return '<th scope="col" data-c="' + p.key + '" style="--th-accent:' + p.accent + '">' +
         '<span class="th-en">' + p.en + '</span>' +
         '<button class="th-name" type="button" data-open="' + p.key + '">' + esc(p.name) + '</button>' +
-        '<span class="th-type">' + typeBadge(p) + '</span></th>';
+        '<span class="th-type">' + esc(p.form) + '</span></th>';
     }).join('') + '</tr>';
 
     body.innerHTML = rows.map(function (r) {
@@ -426,7 +398,7 @@
   var modalCard = modal ? modal.querySelector('.modal-card') : null;
   var modalImg = document.getElementById('modalImg');
   var modalEn = document.getElementById('modalEn');
-  var modalType = document.getElementById('modalType');
+  var modalForm = document.getElementById('modalForm');
   var modalTag = document.getElementById('modalTag');
   var modalTitle = document.getElementById('modalTitle');
   var modalDesc = document.getElementById('modalDesc');
@@ -449,8 +421,8 @@
     modalImg.src = p.img;
     modalImg.alt = p.name + ' 패키지';
     modalEn.textContent = p.en;
-    modalType.innerHTML = typeBadge(p);
-    modalTag.textContent = p.en + ' · ' + p.foodType;
+    modalForm.textContent = p.form;
+    modalTag.textContent = p.en + ' · ' + p.form;
     modalTitle.textContent = p.name;
     modalDesc.textContent = p.desc;
     modalPrice.innerHTML = p.price.toLocaleString('ko-KR') + '<small>원</small>';
@@ -458,23 +430,23 @@
     modalChips.innerHTML = p.chips.map(function (c) { return '<li>' + esc(c) + '</li>'; }).join('');
 
     var specs = [
-      ['제품 유형', TYPE[p.category].label]
-    ];
-    if (p.foodType && p.foodType !== TYPE[p.category].label) specs.push(['식품유형', p.foodType]);
-    specs.push(
+      ['식품유형', p.foodType],
       ['성상', p.form],
       ['내용량', p.content],
-      ['섭취 방법', p.serving],
-      ['원재료·주요 성분', p.ingredients]
-    );
+      ['섭취 방법', p.serving]
+    ];
+    if (p.functionality && p.functionality.length) {
+      specs.push(['기능성 내용', p.functionality.join(' / ')]);
+    }
+    specs.push(['원재료·주요 성분', p.ingredients]);
     modalSpecs.innerHTML = specs.map(function (s) {
       var long = s[1].length > 40 ? ' class="is-long"' : '';
       return '<div><dt>' + s[0] + '</dt><dd' + long + '>' + esc(s[1]) + '</dd></div>';
     }).join('');
 
     modalNote.textContent = p.category === 'hff'
-      ? '건강기능식품 · 기능성 내용과 섭취 시 주의사항은 제품 라벨 표기를 확인하세요. 질병의 예방 및 치료를 위한 의약품이 아닙니다.'
-      : '일반식품(' + p.foodType + ') · 기능성·효능을 표시하지 않습니다. 배송비 3,000원 · 60,000원 이상 무료 · 배송 3~7일';
+      ? '건강기능식품 · 기능성 내용과 섭취 시 주의사항은 제품 라벨 표기를 확인하세요. 배송비 3,000원 · 60,000원 이상 무료 · 배송 3~7일'
+      : '배송비 3,000원 · 60,000원 이상 무료 · 배송 3~7일 · 제품 정보는 라벨 표기를 기준으로 합니다.';
 
     if (modalCard) {
       modalCard.style.setProperty('--accent', p.accent);
@@ -618,7 +590,6 @@
 
   /* ---------------- smooth anchor offset ---------------- */
   document.querySelectorAll('a[href^="#"]').forEach(function (a) {
-    if (a.hasAttribute('data-filter-link')) return;
     a.addEventListener('click', function (e) {
       var id = a.getAttribute('href');
       if (id === '#' || id.length < 2) return;

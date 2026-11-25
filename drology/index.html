@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>닥터올로지 Dr.Ology | 가정의학과 전문의가 직접 운영하는 브랜드</title>
-<meta name="description" content="가정의학과 전문의가 직접 운영하는 닥터올로지. 건강기능식품과 일반식품을 정확히 구분해 표기하고, 원재료·내용량·섭취 방법을 제품 정보 그대로 안내합니다. Dr.Ology Collection을 확인해 보세요.">
+<title>닥터올로지 Dr.Ology | 가정의학과 전문의가 직접 만드는 데일리 웰니스</title>
+<meta name="description" content="가정의학과 전문의가 직접 운영하는 닥터올로지. 원료의 산지와 함량, 배합과 제형을 하나씩 확인해 매일 부담 없이 챙길 수 있는 제품을 만듭니다. Dr.Ology Collection을 만나보세요.">
 <meta name="theme-color" content="#F7F4ED">
 <link rel="canonical" href="https://shoppingranklab.github.io/drology/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="닥터올로지 Dr.Ology">
-<meta property="og:title" content="닥터올로지 Dr.Ology | 진료실의 기준을, 매일의 식탁으로">
-<meta property="og:description" content="가정의학과 전문의가 직접 운영하는 브랜드. 건강기능식품과 일반식품을 구분해 표기하고 원재료와 섭취 방법을 그대로 안내합니다.">
+<meta property="og:title" content="닥터올로지 Dr.Ology | 진료실의 꼼꼼함을, 매일의 루틴으로">
+<meta property="og:description" content="가정의학과 전문의가 직접 운영하는 브랜드. 산지가 확인된 원료와 1일 섭취량을 기준으로 담백하게 만든 데일리 제품을 소개합니다.">
 <meta property="og:url" content="https://shoppingranklab.github.io/drology/">
 <meta property="og:image" content="https://shoppingranklab.github.io/drology/assets/og.jpg">
 <meta property="og:image:width" content="1200">
@@ -20,14 +20,14 @@
 <script>document.documentElement.classList.add('js');</script>
 <link rel="preload" href="assets/pretendard.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/nanum-myeongjo.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="styles.css?v=14">
+<link rel="stylesheet" href="styles.css?v=15">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Brand",
   "name": "닥터올로지",
   "alternateName": "Dr.Ology",
-  "description": "가정의학과 전문의가 직접 운영하는 브랜드. 건강기능식품과 일반식품을 구분해 표기하고, 원재료와 섭취 방법을 제품 정보 그대로 안내합니다.",
+  "description": "가정의학과 전문의가 직접 운영하는 브랜드. 산지가 확인된 원료와 1일 섭취량을 기준으로 매일 챙길 수 있는 제품을 만듭니다.",
   "url": "https://shoppingranklab.github.io/drology/",
   "logo": "https://shoppingranklab.github.io/drology/assets/logo.jpg",
   "parentOrganization": {
@@ -56,10 +56,9 @@
     </a>
     <nav class="nav" aria-label="주요 메뉴">
       <a href="#story" data-nav="story">브랜드 스토리</a>
-      <a href="#collection" data-nav="collection" data-filter-link="all">전체 제품</a>
-      <a href="#collection" data-filter-link="hff">건강기능식품</a>
-      <a href="#collection" data-filter-link="general">일반식품</a>
-      <a href="#types" data-nav="types">표기 기준</a>
+      <a href="#collection" data-nav="collection">전 제품</a>
+      <a href="#standard" data-nav="standard">브랜드 기준</a>
+      <a href="#compare" data-nav="compare">스펙 비교</a>
       <a href="#faq" data-nav="faq">자주 묻는 질문</a>
     </nav>
     <div class="header-actions">
@@ -77,10 +76,8 @@
 <div class="mobile-nav" id="mobileNav" aria-hidden="true">
   <nav aria-label="모바일 메뉴">
     <a href="#story">브랜드 스토리</a>
-    <a href="#collection" data-filter-link="all">전체 제품 <em id="mCountAll">00</em></a>
-    <a href="#collection" data-filter-link="hff">건강기능식품</a>
-    <a href="#collection" data-filter-link="general">일반식품</a>
-    <a href="#types">표기 기준</a>
+    <a href="#collection">전 제품 <em id="mCountAll">00</em></a>
+    <a href="#standard">브랜드 기준</a>
     <a href="#compare">스펙 비교</a>
     <a href="#faq">자주 묻는 질문</a>
   </nav>
@@ -96,13 +93,26 @@
     <div class="container hero-grid">
       <div class="hero-head">
         <p class="eyebrow reveal"><span class="dot"></span>가정의학과 전문의가 직접 운영하는 브랜드</p>
-        <h1 class="reveal" style="--d:1">진료실의 기준을,<br>매일의 <em class="serif">식탁</em>으로.</h1>
-        <p class="hero-lead reveal" style="--d:2">닥터올로지는 가정의학과 전문의가 직접 운영하는 브랜드입니다.<br>건강기능식품과 일반식품을 정확히 구분해 표기하고,<br>원재료와 함량, 섭취 방법을 있는 그대로 안내합니다.</p>
+        <h1 class="reveal" style="--d:1">진료실의 꼼꼼함을,<br>매일의 <em class="serif">루틴</em>으로.</h1>
+        <p class="hero-lead reveal" style="--d:2">닥터올로지는 가정의학과 전문의가 직접 운영하는 브랜드입니다.<br>원료의 산지와 함량, 배합과 제형까지 하나씩 확인하고<br>매일 부담 없이 챙길 수 있는 제품으로 담았습니다.</p>
         <div class="hero-cta reveal" style="--d:3">
           <a class="btn btn-solid" href="#collection">전 제품 보기<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           <a class="btn btn-ghost" href="#story">브랜드 스토리</a>
         </div>
-        <dl class="hero-stats reveal" id="heroStats" style="--d:4"></dl>
+        <dl class="hero-notes reveal" style="--d:4">
+          <div>
+            <dt>전문의가 직접 설계</dt>
+            <dd>원료와 배합, 1일 섭취량까지 직접 확인합니다.</dd>
+          </div>
+          <div>
+            <dt>산지가 분명한 원료</dt>
+            <dd>영국·캐나다·프랑스·미국산 원료를 표기합니다.</dd>
+          </div>
+          <div>
+            <dt>1일 1회, 간결하게</dt>
+            <dd>한 포 또는 한 정. 매일 같은 방식으로.</dd>
+          </div>
+        </dl>
       </div>
 
       <aside class="collection-index reveal" style="--d:2" aria-labelledby="ciTitle">
@@ -129,75 +139,76 @@
       <div class="story-grid">
         <div class="story-head">
           <p class="eyebrow reveal">BRAND STORY</p>
-          <h2 class="section-title serif reveal" style="--d:1">제품보다 먼저,<br>표기의 기준을<br>세웁니다</h2>
-          <p class="section-lead reveal" style="--d:2">어떤 성분을 담았는지, 어떤 유형의 식품인지, 어떻게 먹는지. 닥터올로지는 확인 가능한 사실만 담백하게 적습니다. 제품이 늘어나도 이 기준은 바뀌지 않습니다.</p>
+          <h2 class="section-title serif reveal" style="--d:1">내 가족에게<br>권할 수 있는<br>것만 만듭니다</h2>
+          <p class="section-lead reveal" style="--d:2">진료실에서 많은 분들의 하루를 들여다보며, 매일 먹는 것만큼은 원료와 함량을 분명히 알고 만들고 싶었습니다. 닥터올로지는 그 마음에서 시작한 브랜드입니다.</p>
           <blockquote class="pullquote reveal" style="--d:3">
-            <p>“가정의학과 전문의가 직접 운영하는 닥터올로지입니다.”</p>
-            <cite>닥터올로지 공식 안내 문구</cite>
+            <p>“좋은 원료를 고르고, 필요한 만큼 담고, 매일 먹을 수 있게 만드는 일. 그 세 가지를 가장 깐깐하게 합니다.”</p>
+            <cite>닥터올로지 브랜드 원칙</cite>
           </blockquote>
         </div>
         <div class="story-body">
           <div class="principle-list">
             <article class="principle reveal" style="--d:1">
               <span class="principle-num">01</span>
-              <h3>전문의가 직접 운영</h3>
-              <p>가정의학과 전문의가 브랜드 운영과 제품 기획에 참여합니다. 확인되지 않은 수치나 표현으로 약속하지 않습니다.</p>
+              <h3>전문의가 직접 챙깁니다</h3>
+              <p>가정의학과 전문의가 원료 선택과 배합, 1일 섭취량과 섭취 방법까지 직접 확인합니다. 확인되지 않은 수치로 약속하지 않습니다.</p>
             </article>
             <article class="principle reveal" style="--d:2">
               <span class="principle-num">02</span>
-              <h3>유형을 정확히 표기</h3>
-              <p>건강기능식품과 일반식품을 제품마다 명확히 구분합니다. 일반식품에는 기능성이나 효능을 표시하지 않습니다.</p>
+              <h3>산지까지 확인합니다</h3>
+              <p>영국산 비타민C, 캐나다산 피쉬콜라겐, 프랑스산 엘라스틴, 미국산 히알루론산처럼 산지와 등급이 확인된 원료를 사용합니다.</p>
             </article>
             <article class="principle reveal" style="--d:3">
               <span class="principle-num">03</span>
-              <h3>원료와 함량 그대로</h3>
-              <p>원재료명과 1회 섭취량, 내용량을 제품 정보 그대로 안내합니다. 표시되지 않은 효능은 덧붙이지 않습니다.</p>
+              <h3>매일 이어지게 담습니다</h3>
+              <p>물 없이 그대로 먹는 액상 스틱, 물 한 잔과 함께 먹는 정제. 하루 한 번으로 끝나는 간결한 형태를 고집합니다.</p>
             </article>
           </div>
-          <div class="label-rule reveal" style="--d:4">
-            <p class="micro">LABELING PRINCIPLE</p>
-            <ul class="rule-list">
-              <li><span class="rule-tag is-hff">건강기능식품</span><span>건강기능식품 마크와 기능성 내용을 제품 라벨 기준으로 표시합니다.</span></li>
-              <li><span class="rule-tag is-general">일반식품</span><span>식품유형과 원재료, 내용량, 섭취 방법을 중심으로 표시합니다.</span></li>
+          <div class="ingredient-card reveal" style="--d:4">
+            <p class="micro">SELECTED INGREDIENTS</p>
+            <ul class="ingredient-list">
+              <li><span class="ingredient-name">캐나다산 피쉬콜라겐 펩타이드</span><span class="ingredient-meta">1포 3,000mg</span></li>
+              <li><span class="ingredient-name">영국산 L-글루타치온 효모추출물</span><span class="ingredient-meta">1정 500mg</span></li>
+              <li><span class="ingredient-name">영국산 비타민C · 프랑스산 엘라스틴</span><span class="ingredient-meta">원료 산지 표기</span></li>
+              <li><span class="ingredient-name">미국산 히알루론산 · 블루베리농축액</span><span class="ingredient-meta">액상 베이스</span></li>
             </ul>
-            <p class="rule-note">건강기능식품과 일반식품 모두 질병의 예방 및 치료를 위한 의약품이 아닙니다.</p>
+            <p class="ingredient-note">원재료명과 함량은 제품 라벨과 상품정보 고시를 기준으로 표기합니다.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- TYPES -->
-  <section class="section types" id="types">
+  <!-- STANDARD -->
+  <section class="section standard" id="standard">
     <div class="container">
       <div class="section-head">
         <div>
-          <p class="eyebrow reveal">PRODUCT TYPE</p>
-          <h2 class="section-title reveal" style="--d:1">건강기능식품과 일반식품은<br><em class="serif">표기부터</em> 다릅니다</h2>
+          <p class="eyebrow reveal">OUR STANDARD</p>
+          <h2 class="section-title reveal" style="--d:1">원료와 배합을<br>고르는 <em class="serif">기준</em></h2>
         </div>
-        <p class="section-lead reveal" style="--d:2">같은 브랜드의 제품이라도 유형에 따라 안내할 수 있는 내용이 다릅니다. 닥터올로지는 제품마다 유형을 먼저 밝히고, 그 범위 안에서만 설명합니다.</p>
+        <p class="section-lead reveal" style="--d:2">화려한 수식보다 확인 가능한 정보를 앞세웁니다. 원료의 산지, 1포·1정 기준 함량, 매일 이어지는 제형. 세 가지 순서로 제품을 살핍니다.</p>
       </div>
-      <div class="type-grid">
-        <article class="type-card is-hff reveal" style="--d:1">
-          <div class="type-top">
-            <span class="type-badge is-hff">HEALTH FUNCTIONAL FOOD</span>
-            <span class="type-count" data-count="hff">0종</span>
-          </div>
-          <h3>건강기능식품</h3>
-          <p>식품의약품안전처의 기준에 따라 기능성 내용을 표시할 수 있는 제품입니다. 제품별 기능성 내용과 섭취 시 주의사항은 라벨 표기를 따릅니다.</p>
-          <ul class="type-products" data-products="hff"></ul>
+      <div class="standard-grid">
+        <article class="standard-card reveal" style="--d:1">
+          <div class="standard-top"><span class="standard-num">01</span><span class="standard-en">SOURCING</span></div>
+          <h3>산지가 분명한 원료</h3>
+          <p>원료명과 함께 산지와 등급을 표기합니다. 어디서 온 원료인지 알 수 있어야 제품의 기준도 설명할 수 있다고 생각합니다.</p>
+          <ul class="standard-tags"><li>영국산 비타민C</li><li>캐나다산 피쉬콜라겐</li><li>프랑스산 엘라스틴</li><li>미국산 히알루론산</li></ul>
         </article>
-        <article class="type-card is-general reveal" style="--d:2">
-          <div class="type-top">
-            <span class="type-badge is-general">GENERAL FOOD</span>
-            <span class="type-count" data-count="general">0종</span>
-          </div>
-          <h3>일반식품</h3>
-          <p>식품유형(액상차·과채가공품·음료베이스 등)과 원재료를 중심으로 안내하는 제품입니다. 기능성·효능·신체 부위와 연결한 표현은 사용하지 않습니다.</p>
-          <ul class="type-products" data-products="general"></ul>
+        <article class="standard-card reveal" style="--d:2">
+          <div class="standard-top"><span class="standard-num">02</span><span class="standard-en">FORMULA</span></div>
+          <h3>1포·1정 기준의 함량</h3>
+          <p>함량은 실제로 섭취하는 1포, 1정을 기준으로 표기합니다. 한 번에 담을 수 있는 성분은 한 번에 담아 매일 같은 양을 챙길 수 있게 배합했습니다.</p>
+          <ul class="standard-tags"><li>1일 1회</li><li>1회 1포 · 1정</li><li>함량 그대로 표기</li></ul>
+        </article>
+        <article class="standard-card reveal" style="--d:3">
+          <div class="standard-top"><span class="standard-num">03</span><span class="standard-en">FORM</span></div>
+          <h3>매일 이어지는 제형</h3>
+          <p>액상 스틱은 물 없이 그대로, 정제는 물 한 잔과 함께. 섭취 방법을 단순하게 두어 하루의 습관이 끊기지 않도록 설계합니다.</p>
+          <ul class="standard-tags"><li>액상 스틱</li><li>정제</li><li>휴대 간편</li></ul>
         </article>
       </div>
-      <p class="footnote reveal">제품 유형은 각 제품의 상품정보 고시와 라벨 표기를 기준으로 표시합니다. 제품이 추가되면 이 페이지의 유형 구분과 목록도 함께 갱신됩니다.</p>
     </div>
   </section>
 
@@ -209,14 +220,14 @@
           <p class="eyebrow reveal">DR.OLOGY COLLECTION</p>
           <h2 class="section-title reveal" style="--d:1">전 제품</h2>
         </div>
-        <p class="section-lead reveal" style="--d:2">제품 유형으로 골라 보고, 이름이나 원료로 찾아보세요. 카드를 누르면 원재료·내용량·섭취 방법까지 한 번에 확인할 수 있습니다.</p>
+        <p class="section-lead reveal" style="--d:2">제형으로 골라 보고, 이름이나 원료로 찾아보세요. 카드를 누르면 원재료·내용량·섭취 방법까지 한 번에 확인할 수 있습니다.</p>
       </div>
 
       <div class="toolbar reveal">
-        <div class="filters" role="group" aria-label="제품 유형 필터">
+        <div class="filters" role="group" aria-label="제형 필터">
           <button class="filter is-active" data-filter="all" aria-pressed="true">전체 <b data-count="all">0</b></button>
-          <button class="filter" data-filter="hff" aria-pressed="false">건강기능식품 <b data-count="hff">0</b></button>
-          <button class="filter" data-filter="general" aria-pressed="false">일반식품 <b data-count="general">0</b></button>
+          <button class="filter" data-filter="stick" aria-pressed="false">액상 스틱 <b data-count="stick">0</b></button>
+          <button class="filter" data-filter="tablet" aria-pressed="false">정제 <b data-count="tablet">0</b></button>
         </div>
         <div class="toolbar-right">
           <label class="search">
@@ -257,7 +268,7 @@
           <p class="eyebrow reveal">SPEC COMPARE</p>
           <h2 class="section-title reveal" style="--d:1">제품 <em class="serif">스펙</em> 비교</h2>
         </div>
-        <p class="section-lead reveal" style="--d:2">유형과 식품유형, 성상, 내용량, 섭취 방법을 한눈에 비교하세요. 제품명을 누르면 상세 정보가 열립니다.</p>
+        <p class="section-lead reveal" style="--d:2">성상과 내용량, 1일 섭취량, 주요 원료를 한 번에 비교하세요. 제품명을 누르면 상세 정보가 열립니다.</p>
       </div>
       <p class="table-hint">표를 좌우로 넘기면 제품을 나란히 볼 수 있습니다 <span aria-hidden="true">→</span></p>
       <div class="table-scroll reveal">
@@ -281,22 +292,6 @@
       </div>
       <div class="faq-list reveal">
         <details class="faq-item">
-          <summary>제품 유형은 어떻게 다른가요?<span class="faq-plus" aria-hidden="true"></span></summary>
-          <div class="faq-body"><p>닥터올로지 제품은 <strong>건강기능식품</strong>과 <strong>일반식품</strong>으로 나뉩니다. 건강기능식품은 기준에 따라 기능성 내용을 표시할 수 있고, 일반식품은 식품유형과 원재료를 중심으로 안내합니다. 제품 카드와 상세 정보의 유형 표기를 확인해 주세요.</p></div>
-        </details>
-        <details class="faq-item">
-          <summary>어떤 제품이 건강기능식품인가요?<span class="faq-plus" aria-hidden="true"></span></summary>
-          <div class="faq-body"><p>현재 <strong>올인원 액티브 활성 엽산 800</strong> 1종이 건강기능식품입니다. 콜라겐(액상차)·멜라토닌(과채가공품)·글루타치온(음료베이스) 3종은 일반식품입니다. 제품이 추가되면 이 안내도 함께 갱신됩니다.</p></div>
-        </details>
-        <details class="faq-item">
-          <summary>일반식품에도 효능이 있나요?<span class="faq-plus" aria-hidden="true"></span></summary>
-          <div class="faq-body"><p>일반식품에는 질병의 예방·치료나 기능성·효능을 표시할 수 없습니다. 닥터올로지는 일반식품에 기능성 표현을 사용하지 않고, 원재료와 함량, 섭취 방법만 안내합니다.</p></div>
-        </details>
-        <details class="faq-item">
-          <summary>여러 제품을 함께 섭취해도 되나요?<span class="faq-plus" aria-hidden="true"></span></summary>
-          <div class="faq-body"><p>제품마다 라벨에 표시된 섭취 방법을 먼저 확인해 주세요. 복용 중인 약이 있거나 질환이 있다면 제품 라벨의 주의사항을 확인하고 전문가와 상담하세요.</p></div>
-        </details>
-        <details class="faq-item">
           <summary>배송은 얼마나 걸리나요?<span class="faq-plus" aria-hidden="true"></span></summary>
           <div class="faq-body"><p>택배로 발송되며 배송 기간은 3~7일입니다. 배송비는 3,000원이고 60,000원 이상 구매 시 무료입니다. 산간·도서지방은 추가 금액이 발생할 수 있습니다.</p></div>
         </details>
@@ -305,12 +300,24 @@
           <div class="faq-body"><p>공식몰 상품 페이지에서 구매 방법을 ‘정기배송 할인’과 ‘1회구매’ 중에서 선택할 수 있습니다. 적용 할인율과 배송 주기는 상품 페이지의 안내를 확인하세요.</p></div>
         </details>
         <details class="faq-item">
-          <summary>제품 문의는 어떻게 하나요?<span class="faq-plus" aria-hidden="true"></span></summary>
-          <div class="faq-body"><p>대표·상담/주문 전화 <a href="tel:07080805470">070-8080-5470</a>, 이메일 <a href="mailto:cestlavie4705@naver.com">cestlavie4705@naver.com</a>으로 문의하실 수 있습니다. CS 운영시간은 평일 오전 10시부터 오후 5시까지입니다.</p></div>
+          <summary>제품은 어떻게 섭취하나요?<span class="faq-plus" aria-hidden="true"></span></summary>
+          <div class="faq-body"><p>제품마다 1일 섭취량과 방법이 다릅니다. <strong>액상 스틱</strong>은 한 포를 그대로, <strong>정제</strong>는 충분한 물과 함께 섭취합니다. 제품별 안내는 상품 상세의 ‘섭취 방법’과 제품 라벨을 확인해 주세요.</p></div>
         </details>
         <details class="faq-item">
-          <summary>건강기능식품 섭취 시 주의할 점이 있나요?<span class="faq-plus" aria-hidden="true"></span></summary>
-          <div class="faq-body"><p>건강기능식품은 질병의 예방 및 치료를 위한 의약품이 아닙니다. 제품별 섭취 방법과 주의사항을 확인하고, 특정 질환이 있거나 약을 복용 중인 경우 전문가와 상담 후 섭취하세요.</p></div>
+          <summary>여러 제품을 함께 섭취해도 되나요?<span class="faq-plus" aria-hidden="true"></span></summary>
+          <div class="faq-body"><p>제품마다 정해진 1일 섭취량이 있습니다. 함께 섭취하실 때는 각 제품의 1일 섭취량과 라벨의 주의사항을 먼저 확인해 주세요. 복용 중인 약이 있거나 질환이 있는 경우에는 전문가와 상담 후 섭취하시길 권장합니다.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>보관은 어떻게 하나요?<span class="faq-plus" aria-hidden="true"></span></summary>
+          <div class="faq-body"><p>직사광선을 피해 서늘한 곳에 보관하고, 개봉 후에는 밀봉해 주세요. 액상 스틱은 개봉 후 바로 섭취하시길 권장합니다. 제품별 보관 방법은 라벨 표기를 따릅니다.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>제품 정보는 어디에서 확인할 수 있나요?<span class="faq-plus" aria-hidden="true"></span></summary>
+          <div class="faq-body"><p>상품 상세의 <strong>식품유형·원재료·내용량·섭취 방법</strong>과 제품 라벨에서 확인하실 수 있습니다. 표기가 다른 경우 제품 라벨과 상품정보 고시를 기준으로 합니다.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>제품 문의는 어떻게 하나요?<span class="faq-plus" aria-hidden="true"></span></summary>
+          <div class="faq-body"><p>대표·상담/주문 전화 <a href="tel:07080805470">070-8080-5470</a>, 이메일 <a href="mailto:cestlavie4705@naver.com">cestlavie4705@naver.com</a>으로 문의하실 수 있습니다. CS 운영시간은 평일 오전 10시부터 오후 5시까지입니다.</p></div>
         </details>
       </div>
     </div>
@@ -321,7 +328,7 @@
     <div class="cta-orb" aria-hidden="true"></div>
     <div class="container cta-inner">
       <p class="eyebrow light reveal">CONSULTATION</p>
-      <h2 class="reveal" style="--d:1">제품 선택이<br>고민된다면</h2>
+      <h2 class="reveal" style="--d:1">어떤 제품부터<br>시작할지 망설여진다면</h2>
       <p class="reveal" style="--d:2">주문과 제품 문의를 전화로 도와드립니다.<br>평일 오전 10시부터 오후 5시까지.</p>
       <div class="cta-actions reveal" style="--d:3">
         <a class="btn btn-light" href="tel:07080805470"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.2 2.4 3.2 4.4 5.6 5.6l1.9-1.9c.3-.3.7-.4 1.1-.2 1.2.4 2.4.6 3.7.6.6 0 1.1.5 1.1 1.1v3c0 .6-.5 1.1-1.1 1.1C10.1 20.1 3.9 13.9 3.9 6.6c0-.6.5-1.1 1.1-1.1h3c.6 0 1.1.5 1.1 1.1 0 1.3.2 2.5.6 3.7.1.4 0 .8-.2 1.1l-1.9 1.8z"/></svg>070-8080-5470</a>
@@ -337,7 +344,6 @@
       <div class="footer-brand">
         <img src="assets/logo.jpg" width="170" height="40" alt="닥터올로지 Dr.Ology" class="footer-logo">
         <p>가정의학과 전문의가 직접 운영하는<br>닥터올로지입니다.</p>
-        <div class="footer-lines" id="footerTypes"></div>
       </div>
       <div class="footer-col">
         <h3>고객센터</h3>
@@ -348,7 +354,7 @@
       <div class="footer-col">
         <h3>바로가기</h3>
         <a href="#collection">전 제품</a>
-        <a href="#types">제품 유형 안내</a>
+        <a href="#standard">브랜드 기준</a>
         <a href="#compare">스펙 비교</a>
         <a href="https://cestlavie4705.cafe24.com/" target="_blank" rel="noopener">공식몰</a>
       </div>
@@ -366,7 +372,7 @@
     </div>
     <div class="footer-bottom">
       <p>© 2026 닥터엘 주식회사. All rights reserved.</p>
-      <p class="footer-note">건강기능식품은 질병의 예방 및 치료를 위한 의약품이 아닙니다. 일반식품에는 기능성·효능 표시를 하지 않습니다. 제품별 섭취 방법과 주의사항을 확인하세요.</p>
+      <p class="footer-note">※ 본 페이지의 일반식품은 질병의 예방 및 치료를 위한 의약품이나 건강기능식품이 아닙니다. 제품별 섭취 방법과 주의사항은 라벨 표기를 확인하세요.</p>
     </div>
   </div>
 </footer>
@@ -381,7 +387,7 @@
     <div class="modal-media">
       <img id="modalImg" src="assets/collagen.jpg" width="500" height="500" alt="">
       <span class="modal-en" id="modalEn"></span>
-      <span class="modal-type" id="modalType"></span>
+      <span class="modal-form" id="modalForm"></span>
     </div>
     <div class="modal-body">
       <p class="modal-tag" id="modalTag"></p>
@@ -393,11 +399,11 @@
         <p class="price" id="modalPrice"></p>
         <a class="btn btn-solid small" id="modalBuy" href="https://cestlavie4705.cafe24.com/" target="_blank" rel="noopener">공식몰에서 구매<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
       </div>
-      <p class="modal-note" id="modalNote">배송비 3,000원 · 60,000원 이상 무료 · 배송 3~7일</p>
+      <p class="modal-note" id="modalNote"></p>
     </div>
   </div>
 </div>
 
-<script src="script.js?v=14"></script>
+<script src="script.js?v=15"></script>
 </body>
 </html>
