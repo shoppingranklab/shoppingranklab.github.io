@@ -653,6 +653,8 @@ body.modal-open{overflow:hidden;}
   .hero-cta{width:100%;}
   .hero-cta .btn{flex:1 1 auto;}
   .hero-notes{grid-template-columns:1fr; gap:12px; padding-top:18px;}
+  .ingredient-list li{flex-direction:column; align-items:flex-start; gap:3px;}
+  .ingredient-meta{font-size:11px;}
   .section{padding:64px 0;}
   .toolbar{gap:10px;}
   .filters{width:100%;}
