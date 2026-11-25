@@ -458,13 +458,15 @@
     modalChips.innerHTML = p.chips.map(function (c) { return '<li>' + esc(c) + '</li>'; }).join('');
 
     var specs = [
-      ['제품 유형', TYPE[p.category].label],
-      ['식품유형', p.foodType],
+      ['제품 유형', TYPE[p.category].label]
+    ];
+    if (p.foodType && p.foodType !== TYPE[p.category].label) specs.push(['식품유형', p.foodType]);
+    specs.push(
       ['성상', p.form],
       ['내용량', p.content],
       ['섭취 방법', p.serving],
       ['원재료·주요 성분', p.ingredients]
-    ];
+    );
     modalSpecs.innerHTML = specs.map(function (s) {
       var long = s[1].length > 40 ? ' class="is-long"' : '';
       return '<div><dt>' + s[0] + '</dt><dd' + long + '>' + esc(s[1]) + '</dd></div>';

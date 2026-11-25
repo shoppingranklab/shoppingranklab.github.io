@@ -604,7 +604,7 @@ body::after{
 .modal-close:hover{transform:rotate(90deg); background:#fff;}
 .modal-close svg{width:16px; height:16px;}
 .modal-media{position:relative; background:#fff; display:flex; align-items:center; justify-content:center;}
-.modal-media img{width:100%; height:100%; object-fit:cover;}
+.modal-media img{width:100%; height:100%; object-fit:contain; padding:clamp(14px,2.6vw,26px);}
 .modal-en{position:absolute; left:20px; bottom:18px; font-size:10px; letter-spacing:.22em; color:var(--muted);}
 .modal-type{position:absolute; left:18px; top:18px;}
 .modal-body{padding:clamp(24px,3vw,36px); display:flex; flex-direction:column;}
