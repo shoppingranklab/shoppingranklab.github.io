@@ -369,7 +369,7 @@ body::after{
 .pullquote cite{display:block; margin-top:10px; font-style:normal; font-size:11px; letter-spacing:.14em; color:var(--muted);}
 .balance-head{display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:12px;}
 .balance-head .micro{font-size:10px; letter-spacing:.2em;}
-.balance-ratio{font-family:"Cormorant",serif; font-size:15px; letter-spacing:.12em; color:var(--ink-2);}
+.balance-ratio{font-size:12px; font-weight:600; letter-spacing:.16em; color:var(--ink-2);}
 .balance-bar{display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-bottom:clamp(30px,4vw,48px);}
 .balance-seg{
   position:relative; display:flex; flex-direction:column; justify-content:space-between; gap:22px;
@@ -503,8 +503,8 @@ body::after{
   border-radius:999px; padding:2px 7px; opacity:0; transform:translateY(3px); transition:.4s;
 }
 .gauge.is-top .gauge-badge{opacity:1; transform:none;}
-.gauge-val{margin-left:auto; font-family:"Cormorant",serif; font-size:22px; line-height:1; color:var(--ink); transition:color .3s;}
-.gauge-val small{font-size:12px; color:var(--muted); margin-left:2px;}
+.gauge-val{margin-left:auto; font-size:17px; font-weight:700; letter-spacing:-.02em; line-height:1; color:var(--ink); transition:color .3s;}
+.gauge-val small{font-size:11px; font-weight:600; color:var(--muted); margin-left:1px;}
 .gauge.is-top .gauge-val{color:var(--accent-deep);}
 .gauge-track{height:6px; border-radius:99px; background:#F0EDE5; overflow:hidden; margin-top:8px;}
 .gauge-bar{display:block; height:100%; width:0; border-radius:99px; background:var(--accent); transition:width 1s var(--ease);}
