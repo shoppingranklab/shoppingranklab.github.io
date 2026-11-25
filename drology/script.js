@@ -1,5 +1,8 @@
 /* =========================================================
-   Dr.Ology — interactions
+   Dr.Ology — brand store interactions
+   Product data driven: add an object to PRODUCTS and the
+   filter, cards, compare table, hero index and footer
+   update automatically.
    ========================================================= */
 (function () {
   'use strict';
@@ -8,121 +11,126 @@
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var stillMode = /(?:^|[?&])still=1(?:&|$)/.test(window.location.search);
+  if (stillMode) document.documentElement.classList.add('still');
 
   /* ---------------- data ---------------- */
   var SHOP = 'https://cestlavie4705.cafe24.com/';
-  var PRODUCTS = {
-    collagen: {
+
+  var PRODUCTS = [
+    {
       key: 'collagen',
       en: 'COLLAGEN',
-      name: '올인원 저분자 피쉬 콜라겐',
-      full: '닥터올로지 올인원 저분자 피쉬 콜라겐',
-      tag: '피부 탄력 · 보습',
-      timing: '저녁 식후',
-      img: 'assets/collagen.jpg',
+      name: '올인원 저분자 피쉬 콜라겐 펩타이드',
+      short: '콜라겐',
+      category: 'general',
+      foodType: '액상차',
+      form: '액상 스틱',
+      content: '280 g (20 g × 14포)',
+      serving: '1일 1회, 1회 1포(20 g)',
+      store: '1포(20 g)당',
+      ingredients: '정제수, 블루베리농축액[65Brix/배합함량:블루베리 100%/미국산], 피쉬콜라겐 펩타이드(캐나다산), 비타민C(영국산), 엘라스틴(프랑스산), 히알루론산(미국산), 비오틴(프랑스산)',
+      desc: '블루베리농축액에 피쉬콜라겐 펩타이드와 엘라스틴, 히알루론산, 비오틴, 비타민C를 담은 액상 스틱입니다. 스틱 한 포를 그대로 섭취합니다.',
+      chips: ['피쉬콜라겐 3,000mg', '엘라스틴 100mg', '히알루론산 120mg', '비오틴 300㎍', '비타민C 200mg'],
       price: 86000,
       accent: '#6FB9DF',
       accentDeep: '#1D6E96',
-      desc: '300달톤 저분자 피쉬콜라겐을 마시는 액상 스틱 한 포에 담았습니다. 엘라스틴·히알루론산·비오틴·비타민C를 함께 설계한 올인원 콜라겐입니다.',
-      chips: ['콜라겐 3,000mg', '엘라스틴 100mg', '히알루론산 120mg', '비오틴 300㎍', '비타민C 200mg'],
-      specs: [
-        ['제형', '액상 스틱 · 20g × 14포'],
-        ['1포당', '저분자 피쉬콜라겐 3,000mg (300달톤)'],
-        ['함께 담은 성분', '엘라스틴 100mg · 히알루론산 120mg · 비오틴 300㎍ · 비타민C 200mg'],
-        ['권장 타이밍', '저녁 식후'],
-        ['배송', '택배 · 3,000원 (60,000원 이상 무료) · 3~7일']
-      ],
+      img: 'assets/collagen.jpg',
       link: 'https://cestlavie4705.cafe24.com/product/%EB%8B%A5%ED%84%B0%EC%98%AC%EB%A1%9C%EC%A7%80-%EC%98%AC%EC%9D%B8%EC%9B%90-%EC%A0%80%EB%B6%84%EC%9E%90-%ED%94%BC%EC%89%AC-%EC%BD%9C%EB%9D%BC%EA%B2%90-%EB%A7%88%EC%8B%9C%EB%8A%94-%EC%96%B4%EB%A6%B0-300%EB%8B%AC%ED%86%A4-%EC%95%A1%EC%83%81-%EC%97%98%EB%9D%BC%EC%8A%A4%ED%8B%B4-%ED%9E%88%EC%95%8C%EB%A3%A8%EB%A1%A0%EC%82%B0-%EB%B9%84%EC%98%A4%ED%8B%B4-1%EB%B0%95%EC%8A%A4/12/category/1/display/2/'
     },
-    melatonin: {
+    {
       key: 'melatonin',
       en: 'MELATONIN',
-      name: '식물성 멜라토닌 멜라니크',
-      full: '닥터올로지 식물성 멜라토닌 함유 멜라니크',
-      tag: '숙면 · 수면 리듬',
-      timing: '취침 30분 전',
-      img: 'assets/melatonin.jpg',
+      name: '식물성 멜라토닌 함유 멜라니크',
+      short: '멜라토닌',
+      category: 'general',
+      foodType: '과채가공품',
+      form: '정',
+      content: '500 mg × 60정 (30 g)',
+      serving: '1일 1회, 1회 1정을 자기 전 충분한 물과 함께',
+      store: '1정(500 mg)당',
+      ingredients: '타트체리추출분말(미국산/신양벚나무열매분말 100%) 20%, 말토덱스트린, 산화마그네슘, L-트립토판, 테아닌, 옥수수전분[옥수수 100%(외국산: 러시아, 헝가리, 세르비아 등)], 시게풋(잎)추출분말, 레몬분말추출분말, 캐모마일추출분말, 대나무수액추출분말, 루브리102H, 혼합제제(주정, 정제백크라), 비타민B6염산염',
+      desc: '타트체리추출분말과 식물성 멜라토닌에 L-트립토판, 테아닌, 마그네슘, 비타민B6를 담은 정제입니다. 자기 전 한 정을 충분한 물과 함께 섭취합니다.',
+      chips: ['식물성 멜라토닌 2mg', 'L-트립토판 60mg', '테아닌 50mg', '마그네슘 50mg', '비타민B6 1.5mg'],
       price: 86000,
       accent: '#8187CE',
       accentDeep: '#41468F',
-      desc: '식물성 멜라토닌 2mg에 L-트립토판·테아닌·마그네슘·비타민B6를 더했습니다. 잠들기 전 조용히 마무리하는 한 정입니다.',
-      chips: ['멜라토닌 2mg', 'L-트립토판 60mg', '테아닌 50mg', '마그네슘 50mg', '비타민B6 1.5mg'],
-      specs: [
-        ['제형', '정 · 500mg × 60정 (30g)'],
-        ['1정당', '식물성 멜라토닌 2mg'],
-        ['함께 담은 성분', 'L-트립토판 60mg · 테아닌 50mg · 마그네슘 50mg · 비타민B6 1.5mg'],
-        ['권장 타이밍', '취침 30분 전'],
-        ['배송', '택배 · 3,000원 (60,000원 이상 무료) · 3~7일']
-      ],
+      img: 'assets/melatonin.jpg',
       link: 'https://cestlavie4705.cafe24.com/product/%EB%8B%A5%ED%84%B0%EC%98%AC%EB%A1%9C%EC%A7%80-%EC%8B%9D%EB%AC%BC%EC%84%B1-%EB%A9%9C%EB%9D%BC%ED%86%A0%EB%8B%8C/15/category/1/display/2/'
     },
-    folate: {
+    {
       key: 'folate',
       en: 'FOLATE',
       name: '올인원 액티브 활성 엽산 800',
-      full: '닥터올로지 올인원 액티브 활성 엽산 800 비타민D 1000IU',
-      tag: '활력 · 임신 준비',
-      timing: '아침 식후',
-      img: 'assets/folate.jpg',
+      short: '엽산',
+      category: 'hff',
+      foodType: '건강기능식품',
+      form: '정',
+      content: '500 mg × 60정 (30 g)',
+      serving: '1일 1회, 1일 1정을 충분한 물과 함께',
+      store: '1정(500 mg)당',
+      ingredients: 'Quatrefolic 활성형 엽산(5-MTHF) 800㎍ DFE, 비타민D, 비타민B1·B2·B6·B12, 비오틴, 아연, 비타민C 함유 (제품 라벨 표기)',
+      desc: 'Quatrefolic 활성형 엽산 800㎍ DFE와 비타민D 1,000IU, 비타민B군·비오틴·아연·비타민C를 담은 건강기능식품입니다. 1일 1정을 충분한 물과 함께 섭취합니다.',
+      chips: ['활성형 엽산 800㎍ DFE', '비타민D 1,000IU', '비타민B군', '비오틴·아연'],
       price: 86000,
       accent: '#4FA98C',
       accentDeep: '#1F6D59',
-      desc: 'Quatrefolic 활성형 엽산 800㎍ DFE와 비타민D 1000IU, 비타민B군·비오틴·아연·비타민C를 한 정에 담았습니다.',
-      chips: ['엽산 800㎍ DFE', '비타민D 1000IU', '비타민B1·B2·B6·B12', '비오틴 · 아연', '비타민C'],
-      specs: [
-        ['제형', '정 · 500mg × 60정 (30g)'],
-        ['1정당', 'Quatrefolic 활성형 엽산 800㎍ DFE'],
-        ['함께 담은 성분', '비타민D 1000IU · 비타민B1·B2·B6·B12 · 비오틴 · 아연 · 비타민C'],
-        ['권장 타이밍', '아침 식후'],
-        ['배송', '택배 · 3,000원 (60,000원 이상 무료) · 3~7일']
-      ],
+      img: 'assets/folate.jpg',
       link: 'https://cestlavie4705.cafe24.com/product/%EB%8B%A5%ED%84%B0%EC%98%AC%EB%A1%9C%EC%A7%80-%EC%97%BD%EC%82%B0/14/category/1/display/2/'
     },
-    glutathione: {
+    {
       key: 'glutathione',
       en: 'GLUTATHIONE',
       name: '영국산 글루타치온 비타민C',
-      full: '닥터올로지 영국산 글루타치온 비타민C',
-      tag: '항산화 · 피로 관리',
-      timing: '낮 식후',
-      img: 'assets/glutathione.jpg',
+      short: '글루타치온',
+      category: 'general',
+      foodType: '음료베이스',
+      form: '정',
+      content: '600 mg × 30정 (18 g)',
+      serving: '1일 1회, 1회 1정을 충분한 물과 함께',
+      store: '1정(600 mg)당',
+      ingredients: 'L-글루타치온효모추출물50(영국산), 비타민C(영국산), 대나무수액추출물분말, 가공유지(유채유 100%)',
+      desc: '영국산 L-글루타치온 효모추출물과 영국산 비타민C, 대나무수액추출물분말을 담은 정제입니다. 1일 1정을 충분한 물과 함께 섭취합니다.',
+      chips: ['글루타치온 효모추출물 500mg', '비타민C 50mg', '영국산 원료'],
       price: 100000,
       accent: '#D2A044',
       accentDeep: '#8A6218',
-      desc: '영국산 L-글루타치온 효모추출물 500mg과 영국산 비타민C 50mg을 한 정에 담았습니다.',
-      chips: ['글루타치온 500mg', '비타민C 50mg', '영국산 원료'],
-      specs: [
-        ['제형', '정 · 600mg × 30정 (18g)'],
-        ['1정당', '영국산 L-글루타치온 효모추출물 500mg (L-글루타치온 50% 함유)'],
-        ['함께 담은 성분', '영국산 비타민C 50mg'],
-        ['권장 타이밍', '낮 식후'],
-        ['배송', '택배 · 3,000원 (60,000원 이상 무료) · 3~7일']
-      ],
+      img: 'assets/glutathione.jpg',
       link: 'https://cestlavie4705.cafe24.com/product/%EB%8B%A5%ED%84%B0%EC%98%AC%EB%A1%9C%EC%A7%80-%EA%B8%80%EB%A3%A8%ED%83%80%EC%B9%98%EC%98%A8/16/category/1/display/2/'
     }
+  ];
+
+  var TYPE = {
+    hff: { label: '건강기능식품', en: 'HEALTH FUNCTIONAL FOOD' },
+    general: { label: '일반식품', en: 'GENERAL FOOD' }
   };
-  var ORDER = ['collagen', 'melatonin', 'folate', 'glutathione'];
 
   function won(n) { return n.toLocaleString('ko-KR') + '원'; }
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function typeBadge(p) {
+    return '<span class="badge is-' + p.category + '">' + TYPE[p.category].label + '</span>';
+  }
+  function pad(n) { return String(n).padStart(2, '0'); }
 
   /* ---------------- header ---------------- */
   var header = document.getElementById('siteHeader');
   var toTop = document.getElementById('toTop');
   var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav a[data-nav]'));
-  var navTargets = ['lineup', 'finder', 'philosophy']
+  var navTargets = ['story', 'collection', 'types', 'compare', 'faq']
     .map(function (id) { return document.getElementById(id); })
     .filter(Boolean);
 
-  var lastY = window.scrollY;
   var ticking = false;
   function onScroll() {
     if (ticking) return;
     ticking = true;
     window.requestAnimationFrame(function () {
       var y = window.scrollY;
-      header.classList.toggle('is-scrolled', y > 12);
+      if (header) header.classList.toggle('is-scrolled', y > 12);
       if (toTop) toTop.classList.toggle('is-visible', y > 700);
-      if (y > lastY + 4 || y < lastY - 4) lastY = y;
 
       var activeId = null;
       var bestTop = -Infinity;
@@ -144,6 +152,7 @@
   var burger = document.getElementById('burger');
   var mobileNav = document.getElementById('mobileNav');
   function setMenu(open) {
+    if (!burger || !mobileNav) return;
     burger.classList.toggle('is-open', open);
     burger.setAttribute('aria-expanded', open ? 'true' : 'false');
     burger.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
@@ -163,303 +172,252 @@
     });
   }
 
-  /* ---------------- showcase ---------------- */
-  var showcase = document.getElementById('showcase');
-  var panels = Array.prototype.slice.call(document.querySelectorAll('.panel'));
-  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
-  var tabWrap = document.querySelector('.tabs');
-  var indexEl = document.getElementById('panelIndex');
-  var current = 0;
-  var timer = null;
-  var hovering = false;
-  var CYCLE = 6500;
+  /* ---------------- counts / hero ---------------- */
+  var counts = { all: PRODUCTS.length, hff: 0, general: 0 };
+  PRODUCTS.forEach(function (p) { counts[p.category] += 1; });
 
-  function setActive(i, user) {
-    current = (i + panels.length) % panels.length;
-    panels.forEach(function (p, n) {
-      var on = n === current;
-      p.classList.toggle('is-active', on);
-      p.setAttribute('aria-selected', on ? 'true' : 'false');
-      p.setAttribute('tabindex', on ? '0' : '-1');
-    });
-    tabs.forEach(function (t, n) {
-      var on = n === current;
-      t.classList.remove('is-active');
-      t.classList.toggle('is-active', on);
-      t.setAttribute('aria-selected', on ? 'true' : 'false');
-      if (on) {
-        var bar = t.querySelector('.tab-bar');
-        if (bar) { bar.style.animation = 'none'; void bar.offsetWidth; bar.style.animation = ''; }
-      }
-    });
-    if (indexEl) indexEl.textContent = String(current + 1).padStart(2, '0');
-    schedule(user);
-  }
-  function schedule() {
-    if (timer) clearTimeout(timer);
-    if (reduceMotion || stillMode || hovering || document.hidden) return;
-    timer = setTimeout(function () { setActive(current + 1, 'auto'); }, CYCLE);
-  }
-  panels.forEach(function (p, i) {
-    p.addEventListener('click', function (e) {
-      if (e.target.closest('[data-open]')) return;
-      setActive(i, 'user');
-    });
-    p.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActive(i, 'user'); }
-    });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-count]'), function (el) {
+    var k = el.getAttribute('data-count');
+    if (counts[k] === undefined) return;
+    el.textContent = el.tagName === 'B' ? counts[k] : pad(counts[k]) + '종';
   });
-  tabs.forEach(function (t, i) {
-    t.addEventListener('click', function () { setActive(i, 'user'); });
-  });
-  var prev = document.getElementById('panelPrev');
-  var next = document.getElementById('panelNext');
-  if (prev) prev.addEventListener('click', function () { setActive(current - 1, 'user'); });
-  if (next) next.addEventListener('click', function () { setActive(current + 1, 'user'); });
-  if (showcase) {
-    showcase.addEventListener('mouseenter', function () { hovering = true; if (timer) clearTimeout(timer); if (tabWrap) tabWrap.classList.add('is-paused'); });
-    showcase.addEventListener('mouseleave', function () { hovering = false; schedule(); if (tabWrap) tabWrap.classList.remove('is-paused'); });
-    showcase.addEventListener('focusin', function () { hovering = true; if (timer) clearTimeout(timer); if (tabWrap) tabWrap.classList.add('is-paused'); });
-    showcase.addEventListener('focusout', function (e) {
-      if (!showcase.contains(e.relatedTarget)) { hovering = false; schedule(); if (tabWrap) tabWrap.classList.remove('is-paused'); }
-    });
-    document.addEventListener('visibilitychange', function () {
-      if (document.hidden) { if (timer) clearTimeout(timer); }
-      else { schedule(); }
-    });
-    setActive(0, 'init');
+  var mCountAll = document.getElementById('mCountAll');
+  if (mCountAll) mCountAll.textContent = pad(counts.all);
+
+  var heroStats = document.getElementById('heroStats');
+  if (heroStats) {
+    heroStats.innerHTML =
+      '<div><dt>전체 제품</dt><dd>' + pad(counts.all) + '<small>종</small></dd></div>' +
+      '<div><dt>건강기능식품</dt><dd>' + pad(counts.hff) + '<small>종</small></dd></div>' +
+      '<div><dt>일반식품</dt><dd>' + pad(counts.general) + '<small>종</small></dd></div>';
   }
 
-  /* ---------------- routine timeline ---------------- */
-  var SLOTS = {
-    morning: {
-      time: '07:30', minutes: 450, period: '아침', label: '아침 · 활성 엽산',
-      title: '하루의 시작, 수용성 성분부터',
-      desc: '활성형 엽산(Quatrefolic) 800㎍ DFE와 비타민D 1000IU. 아침 식사 후 물과 함께 챙기면 하루 루틴의 기준점이 됩니다.',
-      chips: ['엽산 800㎍ DFE', '비타민D 1000IU', '비타민B군'],
-      product: 'folate', accent: '#4FA98C'
-    },
-    noon: {
-      time: '12:30', minutes: 750, period: '낮', label: '낮 · 글루타치온',
-      title: '낮의 항산화 라인',
-      desc: '영국산 L-글루타치온 효모추출물 500mg과 영국산 비타민C 50mg. 점심 식후에 함께 챙기는 항산화 조합입니다.',
-      chips: ['글루타치온 500mg', '비타민C 50mg'],
-      product: 'glutathione', accent: '#D2A044'
-    },
-    evening: {
-      time: '20:00', minutes: 1200, period: '저녁', label: '저녁 · 콜라겐',
-      title: '저녁, 피부의 시간',
-      desc: '300달톤 저분자 피쉬콜라겐 3,000mg에 엘라스틴·히알루론산·비오틴. 저녁 식후 한 포로 하루를 마무리합니다.',
-      chips: ['콜라겐 3,000mg', '엘라스틴 100mg', '히알루론산 120mg'],
-      product: 'collagen', accent: '#6FB9DF'
-    },
-    night: {
-      time: '22:30', minutes: 1350, period: '취침 전', label: '취침 전 · 멜라토닌',
-      title: '취침 30분 전, 수면 리듬',
-      desc: '식물성 멜라토닌 2mg과 L-트립토판·테아닌·마그네슘. 잠들기 전 조용히 마무리하는 한 정입니다.',
-      chips: ['멜라토닌 2mg', 'L-트립토판 60mg', '테아닌 50mg'],
-      product: 'melatonin', accent: '#8187CE'
-    }
-  };
-  var SLOT_ORDER = ['morning', 'noon', 'evening', 'night'];
-  var stops = Array.prototype.slice.call(document.querySelectorAll('.stop'));
-  var detail = document.getElementById('routineDetail');
-  var clockHand = document.getElementById('clockHand');
-  var clockArc = document.getElementById('clockArc');
-  var clockTicks = document.getElementById('clockTicks');
-  var routineTime = document.getElementById('routineTime');
-  var routinePeriod = document.getElementById('routinePeriod');
-  var routineThumb = document.getElementById('routineThumb');
-  var routineSlotLabel = document.getElementById('routineSlotLabel');
-  var routineTitle = document.getElementById('routineTitle');
-  var routineDesc = document.getElementById('routineDesc');
-  var routineChips = document.getElementById('routineChips');
-  var routineOpen = document.getElementById('routineOpen');
-  var routineBuy = document.getElementById('routineBuy');
-  var timelineProgress = document.getElementById('timelineProgress');
-
-  if (clockTicks) {
-    var ns = 'http://www.w3.org/2000/svg';
-    for (var t = 0; t < 24; t++) {
-      var line = document.createElementNS(ns, 'line');
-      var major = t % 6 === 0;
-      var r1 = major ? 72 : 78;
-      var ang = (t / 24) * Math.PI * 2 - Math.PI / 2;
-      line.setAttribute('x1', (100 + Math.cos(ang) * r1).toFixed(2));
-      line.setAttribute('y1', (100 + Math.sin(ang) * r1).toFixed(2));
-      line.setAttribute('x2', (100 + Math.cos(ang) * 86).toFixed(2));
-      line.setAttribute('y2', (100 + Math.sin(ang) * 86).toFixed(2));
-      if (major) { line.style.stroke = 'var(--muted)'; line.style.opacity = '.55'; }
-      clockTicks.appendChild(line);
-    }
-  }
-
-  function setSlot(key) {
-    var s = SLOTS[key];
-    if (!s) return;
-    stops.forEach(function (b) { 
-      var on = b.getAttribute('data-slot') === key;
-      b.classList.toggle('is-active', on);
-      b.setAttribute('aria-pressed', on ? 'true' : 'false');
-    });
-    if (detail) detail.style.setProperty('--accent', s.accent);
-    var frac = s.minutes / 1440;
-    if (clockArc) {
-      var C = 2 * Math.PI * 88;
-      clockArc.style.strokeDasharray = C.toFixed(1);
-      clockArc.style.strokeDashoffset = (C * (1 - frac)).toFixed(1);
-    }
-    if (clockHand) clockHand.style.transform = 'rotate(' + (frac * 360).toFixed(1) + 'deg)';
-    if (routineTime) routineTime.textContent = s.time;
-    if (routinePeriod) routinePeriod.textContent = s.period;
-    if (routineSlotLabel) routineSlotLabel.textContent = s.label;
-    if (routineTitle) routineTitle.textContent = s.title;
-    if (routineDesc) routineDesc.textContent = s.desc;
-    if (routineChips) {
-      routineChips.innerHTML = s.chips.map(function (c) { return '<li>' + c + '</li>'; }).join('');
-    }
-    if (routineThumb) {
-      routineThumb.src = PRODUCTS[s.product].img;
-      routineThumb.alt = PRODUCTS[s.product].name;
-    }
-    if (routineOpen) routineOpen.setAttribute('data-open', s.product);
-    if (routineBuy) routineBuy.href = PRODUCTS[s.product].link;
-    var i = SLOT_ORDER.indexOf(key);
-    if (timelineProgress) timelineProgress.style.width = (i / (SLOT_ORDER.length - 1)) * 100 + '%';
-  }
-  stops.forEach(function (b) {
-    b.addEventListener('click', function () { setSlot(b.getAttribute('data-slot')); });
-  });
-  setSlot('morning');
-
-  /* ---------------- finder ---------------- */
-  var WEIGHTS = {
-    skin:  { collagen: 96, melatonin: 24, folate: 32, glutathione: 46 },
-    sleep: { collagen: 28, melatonin: 97, folate: 22, glutathione: 24 },
-    vital: { collagen: 40, melatonin: 18, folate: 95, glutathione: 38 },
-    anti:  { collagen: 34, melatonin: 26, folate: 48, glutathione: 94 }
-  };
-  var CONCERN_NAMES = { skin: '피부 탄력·보습', sleep: '숙면·수면 리듬', vital: '활력·임신 준비', anti: '항산화·피로 관리' };
-  var selected = [];
-  var concernBtns = Array.prototype.slice.call(document.querySelectorAll('.concern'));
-  var gaugeEls = {};
-  Array.prototype.forEach.call(document.querySelectorAll('.gauge'), function (g) { gaugeEls[g.getAttribute('data-key')] = g; });
-  var resultEmpty = document.getElementById('resultEmpty');
-  var resultContent = document.getElementById('resultContent');
-  var resultCount = document.getElementById('resultCount');
-  var resultSummary = document.getElementById('resultSummary');
-  var resultList = document.getElementById('resultList');
-  var resultTotal = document.getElementById('resultTotal');
-  var resultShop = document.getElementById('resultShop');
-  var finderHint = document.getElementById('finderHint');
-  var finderReset = document.getElementById('finderReset');
-
-  function compute() {
-    var scores = { collagen: 0, melatonin: 0, folate: 0, glutathione: 0 };
-    if (!selected.length) return scores;
-    ORDER.forEach(function (k) {
-      var sum = 0;
-      selected.forEach(function (c) { sum += WEIGHTS[c][k]; });
-      scores[k] = Math.round(sum / selected.length);
-    });
-    function has(a, b) { return selected.indexOf(a) > -1 && selected.indexOf(b) > -1; }
-    if (has('skin', 'anti')) { scores.collagen += 4; scores.glutathione += 4; }
-    if (has('sleep', 'vital')) { scores.folate += 3; scores.melatonin += 3; }
-    if (has('skin', 'sleep')) { scores.collagen += 2; scores.melatonin += 2; }
-    if (has('vital', 'anti')) { scores.folate += 2; scores.glutathione += 2; }
-    ORDER.forEach(function (k) { scores[k] = Math.min(99, scores[k]); });
-    return scores;
-  }
-
-  var gaugeTimers = {};
-  function animateGauge(el, to) {
-    var valEl = el.querySelector('.gauge-val');
-    var start = parseInt(valEl.getAttribute('data-v') || '0', 10);
-    if (reduceMotion) { valEl.innerHTML = to + '<small>%</small>'; valEl.setAttribute('data-v', to); return; }
-    if (gaugeTimers[el.getAttribute('data-key')]) cancelAnimationFrame(gaugeTimers[el.getAttribute('data-key')]);
-    var t0 = performance.now();
-    var dur = 700;
-    function step(now) {
-      var p = Math.min(1, (now - t0) / dur);
-      var e = 1 - Math.pow(1 - p, 3);
-      var v = Math.round(start + (to - start) * e);
-      valEl.innerHTML = v + '<small>%</small>';
-      valEl.setAttribute('data-v', v);
-      if (p < 1) gaugeTimers[el.getAttribute('data-key')] = requestAnimationFrame(step);
-    }
-    gaugeTimers[el.getAttribute('data-key')] = requestAnimationFrame(step);
-  }
-
-  function render() {
-    var scores = compute();
-    var ranked = ORDER.slice().sort(function (a, b) { return scores[b] - scores[a]; });
-    var top = ranked[0];
-    ORDER.forEach(function (k) {
-      var g = gaugeEls[k];
-      if (!g) return;
-      g.querySelector('.gauge-bar').style.width = (scores[k] || 0) + '%';
-      animateGauge(g, scores[k] || 0);
-      g.classList.toggle('is-top', selected.length > 0 && k === top);
-    });
-
-    if (!selected.length) {
-      resultEmpty.hidden = false;
-      resultContent.hidden = true;
-      finderHint.textContent = '고민을 선택하면 결과가 계산됩니다.';
-      return;
-    }
-    resultEmpty.hidden = true;
-    resultContent.hidden = false;
-
-    var picks = ranked.filter(function (k) { return scores[k] >= 60; }).slice(0, 3);
-    if (!picks.length) picks = [top];
-
-    var labelMap = { collagen: '콜라겐', melatonin: '멜라토닌', folate: '엽산', glutathione: '글루타치온' };
-    var names = picks.map(function (k) { return labelMap[k]; });
-    resultCount.textContent = picks.length + '종';
-    var joined = names.length > 1 ? names.slice(0, -1).join(', ') + ' · ' + names[names.length - 1] : names[0];
-    resultSummary.textContent = '선택하신 고민에는 ' + joined + ' 라인업이 가장 잘 맞습니다.';
-
-    var total = 0;
-    resultList.innerHTML = picks.map(function (k) {
-      var p = PRODUCTS[k];
-      total += p.price;
-      return '<li>' +
-        '<img src="' + p.img + '" width="48" height="48" alt="" loading="lazy">' +
-        '<div><p class="r-name">' + p.name + '</p><p class="r-tag">' + p.tag + ' · ' + p.timing + '</p></div>' +
-        '<span class="r-price">' + p.price.toLocaleString('ko-KR') + '원</span>' +
-        '</li>';
+  var ciCount = document.getElementById('ciCount');
+  if (ciCount) ciCount.textContent = 'TOTAL ' + pad(counts.all);
+  var ciList = document.getElementById('collectionIndex');
+  if (ciList) {
+    ciList.innerHTML = PRODUCTS.map(function (p, i) {
+      return '<li><button class="ci-item" type="button" data-open="' + p.key + '" aria-label="' + esc(p.name) + ' 상세 정보 열기">' +
+        '<span class="ci-idx">' + pad(i + 1) + '</span>' +
+        '<span class="ci-body"><span class="ci-name">' + esc(p.name) + '</span>' +
+        '<span class="ci-meta">' + typeBadge(p) + '<span>' + esc(p.foodType) + '</span></span></span>' +
+        '<span class="ci-price">' + won(p.price) + '</span>' +
+        '</button></li>';
     }).join('');
-    resultTotal.textContent = won(total);
-    resultShop.href = picks.length === 1 ? PRODUCTS[picks[0]].link : SHOP;
-    resultShop.textContent = '';
-    resultShop.insertAdjacentHTML('beforeend', '공식몰에서 구매<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>');
-    finderHint.textContent = selected.length + '개의 고민을 기준으로 계산했습니다.';
   }
 
-  concernBtns.forEach(function (b) {
+  /* ticker */
+  var ticker = document.getElementById('tickerTrack');
+  if (ticker) {
+    var words = ['DR.OLOGY'];
+    PRODUCTS.forEach(function (p) { words.push(p.en); });
+    words.push('MEDICAL DIRECTOR OWNED', 'HEALTH FUNCTIONAL FOOD', 'GENERAL FOOD');
+    var seq = words.map(function (w) { return '<span>' + w + '</span><i></i>'; }).join('');
+    ticker.innerHTML = seq + seq;
+  }
+
+  /* type cards */
+  Array.prototype.forEach.call(document.querySelectorAll('[data-products]'), function (el) {
+    var k = el.getAttribute('data-products');
+    el.innerHTML = PRODUCTS.filter(function (p) { return p.category === k; })
+      .map(function (p) { return '<li>' + esc(p.name) + '</li>'; }).join('');
+  });
+
+  /* footer type lines */
+  var footerTypes = document.getElementById('footerTypes');
+  if (footerTypes) {
+    footerTypes.innerHTML = '<span>건강기능식품 ' + pad(counts.hff) + '</span><span>일반식품 ' + pad(counts.general) + '</span><span>전체 ' + pad(counts.all) + '</span>';
+  }
+
+  /* ---------------- collection state ---------------- */
+  var state = { filter: 'all', query: '', sort: 'default' };
+  var grid = document.getElementById('productGrid');
+  var emptyBox = document.getElementById('gridEmpty');
+  var resultLine = document.getElementById('resultLine');
+  var filterBtns = Array.prototype.slice.call(document.querySelectorAll('.filter'));
+  var searchInput = document.getElementById('searchInput');
+  var searchClear = document.getElementById('searchClear');
+  var sortSelect = document.getElementById('sortSelect');
+  var emptyReset = document.getElementById('emptyReset');
+
+  function matches(p) {
+    if (state.filter !== 'all' && p.category !== state.filter) return false;
+    if (!state.query) return true;
+    var q = state.query.toLowerCase();
+    var hay = [p.name, p.short, p.en, p.foodType, p.form, p.serving, p.ingredients, p.chips.join(' ')].join(' ').toLowerCase();
+    return hay.indexOf(q) > -1;
+  }
+
+  function sortList(list) {
+    var arr = list.slice();
+    if (state.sort === 'name') {
+      arr.sort(function (a, b) { return a.name.localeCompare(b.name, 'ko'); });
+    } else if (state.sort === 'price-asc') {
+      arr.sort(function (a, b) { return a.price - b.price; });
+    } else if (state.sort === 'price-desc') {
+      arr.sort(function (a, b) { return b.price - a.price; });
+    }
+    return arr;
+  }
+
+  function cardHTML(p, i) {
+    var num = pad(PRODUCTS.indexOf(p) + 1);
+    return '<article class="product-card" data-key="' + p.key + '" id="product-' + p.key + '">' +
+      '<button class="card-media" type="button" data-open="' + p.key + '" aria-label="' + esc(p.name) + ' 상세 정보 열기">' +
+      '<img src="' + p.img + '" width="500" height="500" alt="' + esc(p.name) + ' 패키지" loading="' + (i < 2 ? 'eager' : 'lazy') + '">' +
+      typeBadge(p) +
+      '</button>' +
+      '<div class="card-body">' +
+      '<div class="card-top"><span class="card-num">' + num + '</span><span>' + p.en + '</span></div>' +
+      '<h3 class="card-name">' + esc(p.name) + '</h3>' +
+      '<p class="card-sub">' + TYPE[p.category].label + ' · ' + esc(p.foodType) + ' · ' + esc(p.form) + '</p>' +
+      '<p class="card-desc">' + esc(p.desc) + '</p>' +
+      '<ul class="chip-row">' + p.chips.slice(0, 3).map(function (c) { return '<li>' + esc(c) + '</li>'; }).join('') + '</ul>' +
+      '<div class="card-foot">' +
+      '<p class="price">' + won(p.price) + '</p>' +
+      '<div class="card-actions">' +
+      '<button class="detail-btn" type="button" data-open="' + p.key + '">상세 스펙</button>' +
+      '<a class="buy-btn" href="' + p.link + '" target="_blank" rel="noopener">구매</a>' +
+      '</div></div></div></article>';
+  }
+
+  function renderGrid(animate) {
+    var list = sortList(PRODUCTS.filter(matches));
+    if (grid) {
+      grid.innerHTML = list.map(cardHTML).join('');
+      if (animate) {
+        Array.prototype.forEach.call(grid.children, function (el, i) {
+          if (!reduceMotion) {
+            el.style.animationDelay = (i * 45) + 'ms';
+            el.classList.add('is-new');
+          }
+        });
+      }
+    }
+    if (emptyBox) emptyBox.hidden = list.length > 0;
+    if (resultLine) {
+      var filterLabel = state.filter === 'all' ? '전체' : TYPE[state.filter].label;
+      var parts = [filterLabel];
+      if (state.query) parts.push('“' + state.query + '” 검색');
+      resultLine.textContent = parts.join(' · ') + ' — ' + list.length + '개 제품';
+    }
+  }
+
+  filterBtns.forEach(function (b) {
     b.addEventListener('click', function () {
-      var key = b.getAttribute('data-concern');
-      var i = selected.indexOf(key);
-      if (i > -1) selected.splice(i, 1); else selected.push(key);
-      b.setAttribute('aria-pressed', i > -1 ? 'false' : 'true');
-      render();
+      state.filter = b.getAttribute('data-filter');
+      filterBtns.forEach(function (x) {
+        var on = x === b;
+        x.classList.toggle('is-active', on);
+        x.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      renderGrid(true);
     });
   });
-  if (finderReset) {
-    finderReset.addEventListener('click', function () {
-      selected = [];
-      concernBtns.forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
-      render();
+
+  function setFilter(key, scroll) {
+    state.filter = key;
+    filterBtns.forEach(function (x) {
+      var on = x.getAttribute('data-filter') === key;
+      x.classList.toggle('is-active', on);
+      x.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    renderGrid(true);
+    if (scroll) {
+      var target = document.getElementById('collection');
+      if (target) {
+        var h = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h'), 10) || 72;
+        window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - h - 12, behavior: reduceMotion ? 'auto' : 'smooth' });
+        history.replaceState(null, '', '#collection');
+      }
+    }
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('[data-filter-link]'), function (a) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      setMenu(false);
+      setFilter(a.getAttribute('data-filter-link'), true);
+    });
+  });
+
+  if (searchInput) {
+    var debounce;
+    searchInput.addEventListener('input', function () {
+      clearTimeout(debounce);
+      debounce = setTimeout(function () {
+        state.query = searchInput.value.trim();
+        if (searchClear) searchClear.hidden = !state.query;
+        renderGrid(true);
+      }, 130);
     });
   }
-  render();
+  if (searchClear) {
+    searchClear.addEventListener('click', function () {
+      if (searchInput) { searchInput.value = ''; searchInput.focus(); }
+      state.query = '';
+      searchClear.hidden = true;
+      renderGrid(true);
+    });
+  }
+  if (sortSelect) {
+    sortSelect.addEventListener('change', function () {
+      state.sort = sortSelect.value;
+      renderGrid(true);
+    });
+  }
+  if (emptyReset) {
+    emptyReset.addEventListener('click', function () {
+      state.filter = 'all'; state.query = ''; state.sort = 'default';
+      if (searchInput) searchInput.value = '';
+      if (searchClear) searchClear.hidden = true;
+      if (sortSelect) sortSelect.value = 'default';
+      filterBtns.forEach(function (x) {
+        var on = x.getAttribute('data-filter') === 'all';
+        x.classList.toggle('is-active', on);
+        x.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      renderGrid(true);
+    });
+  }
+
+  /* ---------------- compare table ---------------- */
+  var table = document.getElementById('compareTable');
+  if (table) {
+    var head = table.querySelector('thead');
+    var body = table.querySelector('tbody');
+    var rows = [
+      ['유형', function (p) { return '<span class="badge is-' + p.category + '">' + TYPE[p.category].label + '</span>'; }],
+      ['식품유형', function (p) { return p.foodType; }],
+      ['성상', function (p) { return p.form; }],
+      ['내용량', function (p) { return p.content; }],
+      ['섭취 방법', function (p) { return p.serving; }],
+      ['주요 원료', function (p) { return p.chips.join('<br>'); }],
+      ['가격', function (p) { return '<span class="td-price">' + won(p.price) + '</span>'; }]
+    ];
+    head.innerHTML = '<tr><th scope="col" class="row-head">구분</th>' + PRODUCTS.map(function (p) {
+      return '<th scope="col" data-c="' + p.key + '" style="--th-accent:' + p.accent + '">' +
+        '<span class="th-en">' + p.en + '</span>' +
+        '<button class="th-name" type="button" data-open="' + p.key + '">' + esc(p.name) + '</button>' +
+        '<span class="th-type">' + typeBadge(p) + '</span></th>';
+    }).join('') + '</tr>';
+
+    body.innerHTML = rows.map(function (r) {
+      var label = r[0], fn = r[1];
+      return '<tr><th scope="row">' + label + '</th>' + PRODUCTS.map(function (p) {
+        return '<td>' + fn(p) + '</td>';
+      }).join('') + '</tr>';
+    }).join('') + '<tr><th scope="row">구매</th>' + PRODUCTS.map(function (p) {
+      return '<td><a class="table-buy" href="' + p.link + '" target="_blank" rel="noopener">구매하기</a></td>';
+    }).join('') + '</tr>';
+  }
 
   /* ---------------- product modal ---------------- */
   var modal = document.getElementById('productModal');
   var modalCard = modal ? modal.querySelector('.modal-card') : null;
   var modalImg = document.getElementById('modalImg');
   var modalEn = document.getElementById('modalEn');
+  var modalType = document.getElementById('modalType');
   var modalTag = document.getElementById('modalTag');
   var modalTitle = document.getElementById('modalTitle');
   var modalDesc = document.getElementById('modalDesc');
@@ -467,32 +425,58 @@
   var modalChips = document.getElementById('modalChips');
   var modalPrice = document.getElementById('modalPrice');
   var modalBuy = document.getElementById('modalBuy');
+  var modalNote = document.getElementById('modalNote');
   var lastFocus = null;
 
+  function byKey(key) {
+    for (var i = 0; i < PRODUCTS.length; i++) if (PRODUCTS[i].key === key) return PRODUCTS[i];
+    return null;
+  }
+
   function openModal(key) {
-    var p = PRODUCTS[key];
+    var p = byKey(key);
     if (!p || !modal) return;
     lastFocus = document.activeElement;
     modalImg.src = p.img;
-    modalImg.alt = p.full + ' 패키지';
+    modalImg.alt = p.name + ' 패키지';
     modalEn.textContent = p.en;
-    modalTag.textContent = p.tag;
+    modalType.innerHTML = typeBadge(p);
+    modalTag.textContent = p.en + ' · ' + p.foodType;
     modalTitle.textContent = p.name;
     modalDesc.textContent = p.desc;
     modalPrice.innerHTML = p.price.toLocaleString('ko-KR') + '<small>원</small>';
     modalBuy.href = p.link;
-    modalChips.innerHTML = p.chips.map(function (c) { return '<li>' + c + '</li>'; }).join('');
-    modalSpecs.innerHTML = p.specs.map(function (s) {
-      return '<div><dt>' + s[0] + '</dt><dd>' + s[1] + '</dd></div>';
+    modalChips.innerHTML = p.chips.map(function (c) { return '<li>' + esc(c) + '</li>'; }).join('');
+
+    var specs = [
+      ['제품 유형', TYPE[p.category].label],
+      ['식품유형', p.foodType],
+      ['성상', p.form],
+      ['내용량', p.content],
+      ['섭취 방법', p.serving],
+      [p.store + ' 성분', p.chips.join(' · ')],
+      ['원재료·주요 성분', p.ingredients]
+    ];
+    modalSpecs.innerHTML = specs.map(function (s) {
+      var long = s[1].length > 40 ? ' class="is-long"' : '';
+      return '<div><dt>' + s[0] + '</dt><dd' + long + '>' + esc(s[1]) + '</dd></div>';
     }).join('');
-    modalCard.style.setProperty('--accent', p.accent);
-    modalCard.style.setProperty('--accent-deep', p.accentDeep);
+
+    modalNote.textContent = p.category === 'hff'
+      ? '건강기능식품 · 기능성 내용과 섭취 시 주의사항은 제품 라벨 표기를 확인하세요. 질병의 예방 및 치료를 위한 의약품이 아닙니다.'
+      : '일반식품(' + p.foodType + ') · 기능성·효능을 표시하지 않습니다. 배송비 3,000원 · 60,000원 이상 무료 · 배송 3~7일';
+
+    if (modalCard) {
+      modalCard.style.setProperty('--accent', p.accent);
+      modalCard.style.setProperty('--accent-deep', p.accentDeep);
+    }
     modal.hidden = false;
     document.body.classList.add('modal-open');
     requestAnimationFrame(function () { modal.classList.add('is-open'); });
     var closeBtn = modal.querySelector('.modal-close');
     if (closeBtn) closeBtn.focus();
   }
+
   function closeModal() {
     if (!modal || modal.hidden) return;
     modal.classList.remove('is-open');
@@ -502,6 +486,7 @@
       if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
     }, 260);
   }
+
   document.addEventListener('click', function (e) {
     var trigger = e.target.closest('[data-open]');
     if (trigger) {
@@ -524,8 +509,8 @@
   });
 
   /* ---------------- reveal ---------------- */
-  var reveals = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window && !reduceMotion) {
+  var reveals = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+  if ('IntersectionObserver' in window && !reduceMotion && !stillMode) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
         if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
@@ -536,18 +521,24 @@
     reveals.forEach(function (el) { el.classList.add('in'); });
   }
 
+  /* ---------------- initial render ---------------- */
+  if (stillMode) {
+    document.querySelectorAll('.ticker-track').forEach(function (el) { el.style.animation = 'none'; });
+  }
+  renderGrid(false);
+
   /* ---------------- aurora canvas ---------------- */
   var canvas = document.getElementById('aurora');
   var hero = document.querySelector('.hero');
-  if (canvas && hero && canvas.getContext) {
+  if (canvas && hero && canvas.getContext && !stillMode) {
     var ctx = canvas.getContext('2d');
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
     var W = 0, H = 0, raf = null, visible = true, t0 = performance.now();
     var blobs = [
-      { x: .12, y: .22, r: .42, c: [111, 185, 223], sp: .00016, ph: 0 },
-      { x: .78, y: .12, r: .38, c: [129, 135, 206], sp: .00019, ph: 1.7 },
+      { x: .12, y: .22, r: .44, c: [111, 185, 223], sp: .00016, ph: 0 },
+      { x: .78, y: .12, r: .40, c: [176, 138, 82], sp: .00019, ph: 1.7 },
       { x: .92, y: .62, r: .34, c: [79, 169, 140], sp: .00014, ph: 3.1 },
-      { x: .28, y: .82, r: .30, c: [210, 160, 68], sp: .00021, ph: 4.6 }
+      { x: .28, y: .82, r: .30, c: [129, 135, 206], sp: .00021, ph: 4.6 }
     ];
     var dust = [];
     function resize() {
@@ -560,12 +551,12 @@
       canvas.style.height = H + 'px';
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       if (!dust.length) {
-        for (var i = 0; i < 46; i++) {
+        for (var i = 0; i < 44; i++) {
           dust.push({
             x: Math.random(), y: Math.random(),
             s: .6 + Math.random() * 1.5,
             v: .00003 + Math.random() * .00006,
-            a: .12 + Math.random() * .3,
+            a: .12 + Math.random() * .28,
             c: blobs[i % blobs.length].c
           });
         }
@@ -575,7 +566,7 @@
     function draw(now) {
       var t = (now - t0);
       ctx.clearRect(0, 0, W, H);
-      blobs.forEach(function (b, i) {
+      blobs.forEach(function (b) {
         var bx = (b.x + Math.sin(t * b.sp + b.ph) * .045) * W;
         var by = (b.y + Math.cos(t * b.sp * 1.3 + b.ph) * .05) * H;
         var r = b.r * Math.max(W, H) * (.9 + Math.sin(t * b.sp * 2 + b.ph) * .06);
@@ -615,8 +606,9 @@
     if (reduceMotion) { draw(performance.now()); }
   }
 
-  /* ---------------- smooth anchor offset for mobile ---------------- */
+  /* ---------------- smooth anchor offset ---------------- */
   document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    if (a.hasAttribute('data-filter-link')) return;
     a.addEventListener('click', function (e) {
       var id = a.getAttribute('href');
       if (id === '#' || id.length < 2) return;
