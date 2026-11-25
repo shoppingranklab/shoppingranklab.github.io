@@ -7,6 +7,7 @@
   document.documentElement.classList.add('js');
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var stillMode = /(?:^|[?&])still=1(?:&|$)/.test(window.location.search);
 
   /* ---------------- data ---------------- */
   var SHOP = 'https://cestlavie4705.cafe24.com/';
@@ -196,7 +197,7 @@
   }
   function schedule() {
     if (timer) clearTimeout(timer);
-    if (reduceMotion || hovering || document.hidden) return;
+    if (reduceMotion || stillMode || hovering || document.hidden) return;
     timer = setTimeout(function () { setActive(current + 1, 'auto'); }, CYCLE);
   }
   panels.forEach(function (p, i) {
