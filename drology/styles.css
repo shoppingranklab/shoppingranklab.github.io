@@ -253,7 +253,7 @@ body::after{
 }
 .hero h1 em{font-style:normal; position:relative; padding-right:.04em;}
 .hero h1 em::after{
-  content:""; position:absolute; left:2%; right:2%; bottom:.02em; height:2px;
+  content:""; position:absolute; left:2%; right:2%; bottom:-.06em; height:2px;
   background:linear-gradient(90deg, var(--gold), rgba(176,138,82,.15));
   border-radius:2px;
 }
