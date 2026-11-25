@@ -693,6 +693,12 @@ body.modal-open{overflow:hidden;}
   .filter b{display:none;}
 }
 
+
+/* ---------- capture mode (?still=1) ---------- */
+.still .site-header{position:absolute;}
+.still .to-top{display:none !important;}
+.still .modal{display:none !important;}
+
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto;}
   *,*::before,*::after{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important;}
